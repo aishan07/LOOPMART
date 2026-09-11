@@ -1,5 +1,6 @@
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
+import { sendOrderNotificationEmail, sendOrderConfirmationEmail } from "../utils/sendEmail.js";
 
 export const createOrder = async (req, res) => {
   try {
@@ -35,6 +36,10 @@ export const createOrder = async (req, res) => {
         await product.save();
       }
     }
+
+    // fire-and-forget emails — don't block the response on these
+    sendOrderNotificationEmail(order);
+    sendOrderConfirmationEmail(order, req.user.email);
 
     res.status(201).json(order);
   } catch (error) {
