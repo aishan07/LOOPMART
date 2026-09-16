@@ -29,12 +29,14 @@ export default function AdminDashboard() {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleImageSelect = (e) => {
-    const files = Array.from(e.target.files).slice(0, 6 - existingImages.length);
-    setImageFiles(files);
-    previews.forEach((url) => URL.revokeObjectURL(url));
-    setPreviews(files.map((file) => URL.createObjectURL(file)));
-  };
+ const handleImageSelect = (e) => {
+  const newFiles = Array.from(e.target.files);
+  const combined = [...imageFiles, ...newFiles].slice(0, 6 - existingImages.length);
+  setImageFiles(combined);
+  previews.forEach((url) => URL.revokeObjectURL(url));
+  setPreviews(combined.map((file) => URL.createObjectURL(file)));
+  e.target.value = ""; // allows picking the same file again / re-triggers onChange next time
+};
 
   const removeNewImage = (index) => {
     URL.revokeObjectURL(previews[index]);
