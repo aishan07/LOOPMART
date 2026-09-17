@@ -12,13 +12,23 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const exists = prev.find((i) => i.product === product._id);
-      if (exists) return prev;
-      return [...prev, { product: product._id, title: product.title, price: product.price, quantity: 1 }];
-    });
-  };
+ const addToCart = (product) => {
+  setCart((prev) => {
+    const exists = prev.find((i) => i.product === product._id);
+    if (exists) return prev;
+    return [
+      ...prev,
+      {
+        product: product._id,
+        title: product.title,
+        price: product.price,
+        image: product.images?.[0] || null,
+        condition: product.condition,
+        quantity: 1,
+      },
+    ];
+  });
+};
 
   const removeFromCart = (productId) => {
     setCart((prev) => prev.filter((i) => i.product !== productId));

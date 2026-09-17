@@ -557,11 +557,17 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="footer-links">
+          <div className="footer-links">
           <a href="/">Shop</a>
           <a href="#categories">Categories</a>
           <a href="/orders">My Orders</a>
           <a href="/wishlist">Wishlist</a>
+        </div>
+
+        <div className="footer-contact" style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+          <strong style={{ marginBottom: "2px" }}>Contact Us</strong>
+          <a href="mailto:aishanshaikh7@gmail.com">aishanshaikh7@gmail.com</a>
+          <a href="tel:+919769351949">+91 97693 51949</a>
         </div>
 
         <div className="footer-bottom">
