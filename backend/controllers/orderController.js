@@ -1,80 +1,195 @@
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import { sendOrderNotificationEmail, sendOrderConfirmationEmail } from "../utils/sendEmail.js";
-
 export const createOrder = async (req, res) => {
   try {
-    const { items, shippingAddress, paymentMethod } = req.body;
-
-    if (!items || items.length === 0) {
-      return res.status(400).json({ message: "No order items" });
-    }
-
-    let totalAmount = 0;
-    for (const item of items) {
-      const product = await Product.findById(item.product);
-      if (!product || product.isSold) {
-        return res.status(400).json({ message: `Product unavailable: ${item.title}` });
-      }
-      totalAmount += product.price * item.quantity;
-    }
-
-    const order = await Order.create({
-      user: req.user._id,
+    const {
       items,
       shippingAddress,
       paymentMethod,
+    } = req.body;
+
+    if (!items || items.length === 0) {
+      return res.status(400).json({
+        message: "No order items",
+      });
+    }
+
+    let totalAmount = 0;
+
+    const orderItems = [];
+
+
+    // =========================================================
+    // GET REAL PRODUCT INFORMATION
+    // =========================================================
+
+    for (const item of items) {
+
+      const product = await Product.findById(item.product);
+
+      if (!product || product.isSold) {
+        return res.status(400).json({
+          message: `Product unavailable: ${
+            item.title || item.product
+          }`,
+        });
+      }
+
+
+      const quantity = Number(item.quantity || 1);
+
+
+      if (quantity <= 0) {
+        return res.status(400).json({
+          message: "Invalid quantity",
+        });
+      }
+
+
+      // Check available stock
+      if (quantity > product.stock) {
+        return res.status(400).json({
+          message: `Only ${product.stock} item(s) available for ${product.title}`,
+        });
+      }
+
+
+      const itemTotal =
+        Number(product.price) * quantity;
+
+
+      totalAmount += itemTotal;
+
+
+      // =======================================================
+      // SAVE PRODUCT DETAILS INSIDE ORDER
+      // =======================================================
+
+      orderItems.push({
+
+        product: product._id,
+
+        title: product.title,
+
+        description:
+          product.description || "",
+
+        category:
+          product.category || "",
+
+        condition:
+          product.condition || "",
+
+        price:
+          product.price,
+
+        image:
+          product.images?.[0] || "",
+
+        images:
+          product.images || [],
+
+        quantity,
+
+        itemTotal,
+
+      });
+    }
+
+
+    // =========================================================
+    // CREATE ORDER
+    // =========================================================
+
+    const order = await Order.create({
+
+      user: req.user._id,
+
+      items: orderItems,
+
+      shippingAddress: {
+        fullName:
+          shippingAddress?.fullName || "",
+
+        phone:
+          shippingAddress?.phone || "",
+
+        addressLine:
+          shippingAddress?.addressLine ||
+          shippingAddress?.address ||
+          "",
+
+        city:
+          shippingAddress?.city || "",
+
+        pincode:
+          shippingAddress?.pincode || "",
+      },
+
+      paymentMethod:
+        paymentMethod || "COD",
+
       totalAmount,
+
     });
 
-    // mark single-stock secondhand items as sold
-    for (const item of items) {
-      const product = await Product.findById(item.product);
+
+    // =========================================================
+    // UPDATE PRODUCT STOCK
+    // =========================================================
+
+    for (const item of orderItems) {
+
+      const product =
+        await Product.findById(item.product);
+
       if (product) {
+
         product.stock -= item.quantity;
-        if (product.stock <= 0) product.isSold = true;
+
+
+        if (product.stock <= 0) {
+
+          product.stock = 0;
+
+          product.isSold = true;
+
+        }
+
+
         await product.save();
       }
     }
 
-    // fire-and-forget emails — don't block the response on these
+
+    // =========================================================
+    // SEND EMAILS
+    // =========================================================
+
     sendOrderNotificationEmail(order);
-    sendOrderConfirmationEmail(order, req.user.email);
+
+    sendOrderConfirmationEmail(
+      order,
+      req.user.email
+    );
+
+
+    // =========================================================
+    // RESPONSE
+    // =========================================================
 
     res.status(201).json(order);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
-export const getMyOrders = async (req, res) => {
-  try {
-    const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 });
-    res.json(orders);
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
-// admin only
-export const getAllOrders = async (req, res) => {
-  try {
-    const orders = await Order.find().populate("user", "name email").sort({ createdAt: -1 });
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    console.error(
+      "Create order error:",
+      error
+    );
 
-export const updateOrderStatus = async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.id);
-    if (!order) return res.status(404).json({ message: "Order not found" });
-
-    order.status = req.body.status || order.status;
-    const updated = await order.save();
-    res.json(updated);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };
