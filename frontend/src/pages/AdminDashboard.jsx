@@ -25,6 +25,57 @@ export default function AdminDashboard() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [tab, setTab] = useState("products");
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  const categories = [
+    { name: "Shoes", icon: "👟" },
+    { name: "Clothing", label: "Clothes", icon: "👕" },
+    { name: "Watches", icon: "⌚" },
+    { name: "Accessories", icon: "👜" },
+    { name: "Electronics", icon: "📱" },
+    { name: "Furniture", icon: "🪑" },
+    { name: "Books", icon: "📚" },
+    { name: "Other", icon: "📦" },
+  ];
+
+  const heroSlides = [
+    {
+      image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1600&q=85",
+      title: "Give Pre-Loved Fashion a New Life",
+      text: "Discover clothes, shoes and accessories at great prices.",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1600&q=85",
+      title: "Find Your Next Watch",
+      text: "Unique pre-owned watches ready for their next owner.",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=85",
+      title: "Smart Shopping, Second Life",
+      text: "Turn unused products into useful finds with LoopMart.",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&q=85",
+      title: "Buy Better. Reuse More.",
+      text: "A marketplace for quality second-hand products.",
+    },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((current) => (current + 1) % heroSlides.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
+  const nextHero = () => {
+    setHeroIndex((current) => (current + 1) % heroSlides.length);
+  };
+
+  const previousHero = () => {
+    setHeroIndex((current) => (current - 1 + heroSlides.length) % heroSlides.length);
+  };
 
   const fetchData = async () => {
     const { data: prods } = await api.get("/products");
@@ -149,6 +200,81 @@ export default function AdminDashboard() {
         Manage your listings and track incoming orders.
       </p>
 
+      {/* Hero image slider */}
+      <section style={heroSectionStyle}>
+        {heroSlides.map((slide, index) => (
+          <div
+            key={slide.image}
+            style={{
+              ...heroSlideStyle,
+              opacity: index === heroIndex ? 1 : 0,
+              pointerEvents: index === heroIndex ? "auto" : "none",
+              backgroundImage: `linear-gradient(90deg, rgba(17,24,39,0.82), rgba(17,24,39,0.28)), url(${slide.image})`,
+            }}
+          >
+            <div style={heroContentStyle}>
+              <span style={heroEyebrowStyle}>LOOPMART MARKETPLACE</span>
+              <h2 style={heroTitleStyle}>{slide.title}</h2>
+              <p style={heroTextStyle}>{slide.text}</p>
+            </div>
+          </div>
+        ))}
+
+        <button type="button" onClick={previousHero} style={{ ...heroArrowStyle, left: "16px" }} aria-label="Previous banner">
+          ‹
+        </button>
+        <button type="button" onClick={nextHero} style={{ ...heroArrowStyle, right: "16px" }} aria-label="Next banner">
+          ›
+        </button>
+
+        <div style={heroDotsStyle}>
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => setHeroIndex(index)}
+              aria-label={`Show banner ${index + 1}`}
+              style={{
+                ...heroDotStyle,
+                width: index === heroIndex ? "28px" : "8px",
+                opacity: index === heroIndex ? 1 : 0.55,
+              }}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Dashboard categories */}
+      <section style={{ marginBottom: "30px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px", gap: "12px", flexWrap: "wrap" }}>
+          <div>
+            <h2 style={{ margin: 0, fontSize: "1.25rem" }}>Shop Categories</h2>
+            <p style={{ margin: "4px 0 0", color: "#6b7280", fontSize: "0.9rem" }}>
+              Manage products across every LoopMart category.
+            </p>
+          </div>
+        </div>
+
+        <div style={categoryGridStyle}>
+          {categories.map((category) => (
+            <button
+              key={category.name}
+              type="button"
+              onClick={() => {
+                setTab("products");
+                setForm((current) => ({ ...current, category: category.name }));
+              }}
+              style={categoryCardStyle}
+            >
+              <span style={categoryIconStyle}>{category.icon}</span>
+              <span style={{ fontWeight: "600", color: "#1f2937" }}>
+                {category.label || category.name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <div style={{ display: "flex", gap: "10px", marginBottom: "28px", borderBottom: "1px solid #e5e7eb" }}>
         <TabButton active={tab === "products"} onClick={() => setTab("products")}>
           Products ({products.length})
@@ -207,11 +333,11 @@ export default function AdminDashboard() {
                 <div style={{ flex: 1 }}>
                   <Field label="Category">
                     <select name="category" value={form.category} onChange={handleChange} style={inputStyle}>
-                      <option>Electronics</option>
-                      <option>Furniture</option>
-                      <option>Clothing</option>
-                      <option>Books</option>
-                      <option>Other</option>
+                      {categories.map((category) => (
+                        <option key={category.name} value={category.name}>
+                          {category.label || category.name}
+                        </option>
+                      ))}
                     </select>
                   </Field>
                 </div>
@@ -425,6 +551,123 @@ const Thumb = ({ src, onRemove, label }) => (
     </button>
   </div>
 );
+
+const heroSectionStyle = {
+  position: "relative",
+  height: "310px",
+  borderRadius: "18px",
+  overflow: "hidden",
+  marginBottom: "28px",
+  background: "#111827",
+  boxShadow: "0 10px 30px rgba(0,0,0,0.10)",
+};
+
+const heroSlideStyle = {
+  position: "absolute",
+  inset: 0,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  transition: "opacity 700ms ease-in-out",
+  display: "flex",
+  alignItems: "center",
+};
+
+const heroContentStyle = {
+  maxWidth: "620px",
+  padding: "36px 72px",
+  color: "#fff",
+};
+
+const heroEyebrowStyle = {
+  display: "inline-block",
+  marginBottom: "10px",
+  fontSize: "0.75rem",
+  fontWeight: "700",
+  letterSpacing: "0.14em",
+  opacity: 0.85,
+};
+
+const heroTitleStyle = {
+  margin: "0 0 10px",
+  fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+  lineHeight: 1.08,
+};
+
+const heroTextStyle = {
+  margin: 0,
+  fontSize: "1rem",
+  lineHeight: 1.6,
+  maxWidth: "520px",
+  color: "rgba(255,255,255,0.9)",
+};
+
+const heroArrowStyle = {
+  position: "absolute",
+  top: "50%",
+  transform: "translateY(-50%)",
+  width: "42px",
+  height: "42px",
+  borderRadius: "50%",
+  border: "1px solid rgba(255,255,255,0.35)",
+  background: "rgba(0,0,0,0.28)",
+  color: "#fff",
+  fontSize: "30px",
+  lineHeight: 1,
+  cursor: "pointer",
+  backdropFilter: "blur(5px)",
+};
+
+const heroDotsStyle = {
+  position: "absolute",
+  bottom: "18px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  display: "flex",
+  alignItems: "center",
+  gap: "7px",
+};
+
+const heroDotStyle = {
+  height: "8px",
+  padding: 0,
+  border: "none",
+  borderRadius: "999px",
+  background: "#fff",
+  cursor: "pointer",
+  transition: "all 250ms ease",
+};
+
+const categoryGridStyle = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+  gap: "12px",
+};
+
+const categoryCardStyle = {
+  minHeight: "105px",
+  padding: "16px 10px",
+  background: "#fff",
+  border: "1px solid #e5e7eb",
+  borderRadius: "12px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "9px",
+  cursor: "pointer",
+  transition: "transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease",
+};
+
+const categoryIconStyle = {
+  width: "48px",
+  height: "48px",
+  borderRadius: "50%",
+  background: "#f3f4f6",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "25px",
+};
 
 const inputStyle = {
   padding: "10px 12px",

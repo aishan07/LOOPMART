@@ -1,6 +1,16 @@
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
-import { sendOrderNotificationEmail, sendOrderConfirmationEmail } from "../utils/sendEmail.js";
+
+import {
+  sendOrderNotificationEmail,
+  sendOrderConfirmationEmail,
+} from "../utils/sendEmail.js";
+
+
+// ============================================================
+// CREATE ORDER
+// ============================================================
+
 export const createOrder = async (req, res) => {
   try {
     const {
@@ -19,11 +29,7 @@ export const createOrder = async (req, res) => {
 
     const orderItems = [];
 
-
-    // =========================================================
-    // GET REAL PRODUCT INFORMATION
-    // =========================================================
-
+    // Get actual product information from MongoDB
     for (const item of items) {
 
       const product = await Product.findById(item.product);
@@ -36,9 +42,7 @@ export const createOrder = async (req, res) => {
         });
       }
 
-
       const quantity = Number(item.quantity || 1);
-
 
       if (quantity <= 0) {
         return res.status(400).json({
@@ -46,28 +50,20 @@ export const createOrder = async (req, res) => {
         });
       }
 
-
-      // Check available stock
       if (quantity > product.stock) {
         return res.status(400).json({
           message: `Only ${product.stock} item(s) available for ${product.title}`,
         });
       }
 
-
       const itemTotal =
         Number(product.price) * quantity;
-
 
       totalAmount += itemTotal;
 
 
-      // =======================================================
-      // SAVE PRODUCT DETAILS INSIDE ORDER
-      // =======================================================
-
+      // Save detailed product information
       orderItems.push({
-
         product: product._id,
 
         title: product.title,
@@ -93,15 +89,11 @@ export const createOrder = async (req, res) => {
         quantity,
 
         itemTotal,
-
       });
     }
 
 
-    // =========================================================
-    // CREATE ORDER
-    // =========================================================
-
+    // Create order
     const order = await Order.create({
 
       user: req.user._id,
@@ -131,14 +123,10 @@ export const createOrder = async (req, res) => {
         paymentMethod || "COD",
 
       totalAmount,
-
     });
 
 
-    // =========================================================
-    // UPDATE PRODUCT STOCK
-    // =========================================================
-
+    // Update product stock
     for (const item of orderItems) {
 
       const product =
@@ -148,25 +136,17 @@ export const createOrder = async (req, res) => {
 
         product.stock -= item.quantity;
 
-
         if (product.stock <= 0) {
-
           product.stock = 0;
-
           product.isSold = true;
-
         }
-
 
         await product.save();
       }
     }
 
 
-    // =========================================================
-    // SEND EMAILS
-    // =========================================================
-
+    // Send emails
     sendOrderNotificationEmail(order);
 
     sendOrderConfirmationEmail(
@@ -175,16 +155,103 @@ export const createOrder = async (req, res) => {
     );
 
 
-    // =========================================================
-    // RESPONSE
-    // =========================================================
-
     res.status(201).json(order);
 
   } catch (error) {
 
     console.error(
       "Create order error:",
+      error
+    );
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+
+// ============================================================
+// GET MY ORDERS
+// ============================================================
+
+export const getMyOrders = async (req, res) => {
+  try {
+
+    const orders = await Order.find({
+      user: req.user._id,
+    }).sort({
+      createdAt: -1,
+    });
+
+    res.json(orders);
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+
+// ============================================================
+// GET ALL ORDERS — ADMIN
+// ============================================================
+
+export const getAllOrders = async (req, res) => {
+  try {
+
+    const orders = await Order.find()
+      .populate("user", "name email")
+      .sort({
+        createdAt: -1,
+      });
+
+    res.json(orders);
+
+  } catch (error) {
+
+    console.error(
+      "Get all orders error:",
+      error
+    );
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+
+// ============================================================
+// UPDATE ORDER STATUS — ADMIN
+// ============================================================
+
+export const updateOrderStatus = async (req, res) => {
+  try {
+
+    const order =
+      await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        message: "Order not found",
+      });
+    }
+
+    order.status =
+      req.body.status || order.status;
+
+    const updated =
+      await order.save();
+
+    res.json(updated);
+
+  } catch (error) {
+
+    console.error(
+      "Update order status error:",
       error
     );
 
