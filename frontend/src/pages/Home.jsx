@@ -117,7 +117,7 @@ export default function Home() {
   }, []);
 
   /* =====================================================
-     HERO SLIDER
+     HERO AUTO SLIDER
   ===================================================== */
 
   useEffect(() => {
@@ -129,21 +129,22 @@ export default function Home() {
   }, []);
 
   /* =====================================================
-     SCROLL TO PRODUCTS
+     SCROLL TO PRODUCT LISTING
   ===================================================== */
 
   const scrollToProducts = () => {
     setTimeout(() => {
-      const productSection =
-        document.getElementById("product-listing");
+      const element = document.getElementById(
+        "product-listing"
+      );
 
-      if (productSection) {
-        productSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }, 150);
+      if (!element) return;
+
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
   };
 
   /* =====================================================
@@ -151,15 +152,14 @@ export default function Home() {
   ===================================================== */
 
   const scrollToCategories = () => {
-    const categorySection =
-      document.getElementById("categories");
+    const element = document.getElementById("categories");
 
-    if (categorySection) {
-      categorySection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
+    if (!element) return;
+
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   /* =====================================================
@@ -170,12 +170,16 @@ export default function Home() {
     event.preventDefault();
 
     fetchProducts(search, category);
-
     scrollToProducts();
   };
 
   /* =====================================================
-     CATEGORY SELECT
+     CATEGORY
+     
+     Click category:
+     1. Change category
+     2. Fetch products
+     3. Automatically go to product listing
   ===================================================== */
 
   const chooseCategory = (selectedCategory) => {
@@ -188,6 +192,8 @@ export default function Home() {
 
   /* =====================================================
      SHOP NOW
+     
+     Shows ALL products and goes directly to listing
   ===================================================== */
 
   const handleShopNow = () => {
@@ -210,19 +216,6 @@ export default function Home() {
     fetchProducts("", "");
 
     scrollToProducts();
-  };
-
-  /* =====================================================
-     HORIZONTAL ROW SCROLL
-  ===================================================== */
-
-  const scrollRow = (id, amount) => {
-    document
-      .getElementById(id)
-      ?.scrollBy({
-        left: amount,
-        behavior: "smooth",
-      });
   };
 
   const currentSlide = slides[slide];
@@ -254,17 +247,14 @@ export default function Home() {
             {currentSlide[3]}
           </p>
 
-          <div>
-
-            {/* SHOP NOW */}
+          <div className="hero-buttons">
 
             <button
+              type="button"
               onClick={handleShopNow}
             >
               Shop Now →
             </button>
-
-            {/* EXPLORE CATEGORIES */}
 
             <button
               type="button"
@@ -278,6 +268,7 @@ export default function Home() {
 
         </div>
 
+
         {/* HERO IMAGE */}
 
         <div className="hero-image">
@@ -287,10 +278,9 @@ export default function Home() {
             alt="LoopMart collection"
           />
 
-          {/* PREVIOUS */}
-
           <button
             type="button"
+            className="hero-prev"
             onClick={() =>
               setSlide(
                 (slide - 1 + slides.length) %
@@ -301,10 +291,9 @@ export default function Home() {
             ←
           </button>
 
-          {/* NEXT */}
-
           <button
             type="button"
+            className="hero-next"
             onClick={() =>
               setSlide(
                 (slide + 1) % slides.length
@@ -348,8 +337,8 @@ export default function Home() {
               ([name, value, icon]) => (
 
                 <button
-                  key={name}
                   type="button"
+                  key={name}
                   className={
                     category === value
                       ? "selected"
@@ -382,7 +371,10 @@ export default function Home() {
           COLLECTIONS
       ================================================= */}
 
-      <section className="section">
+      <section
+        className="section collections-section"
+        id="collections"
+      >
 
         <Heading
           eyebrow="CURATED FOR YOU"
@@ -445,7 +437,7 @@ export default function Home() {
 
 
       {/* =================================================
-          PRODUCT LISTING
+          PRODUCTS
       ================================================= */}
 
       <section
@@ -457,9 +449,7 @@ export default function Home() {
 
           <Heading
             eyebrow="FRESH FINDS"
-            title={
-              category || "Just In"
-            }
+            title={category || "Just In"}
             text="Quality products, ready for their next chapter."
           />
 
@@ -483,8 +473,6 @@ export default function Home() {
 
         ) : products.length === 0 ? (
 
-          /* NO PRODUCTS */
-
           <div className="empty">
 
             <h3>
@@ -505,8 +493,6 @@ export default function Home() {
           </div>
 
         ) : (
-
-          /* PRODUCTS */
 
           <Row
             id="product-row"
@@ -604,9 +590,7 @@ export default function Home() {
 
           <article>
 
-            <b>
-              ♻
-            </b>
+            <b>♻</b>
 
             <h3>
               Less Waste
@@ -619,12 +603,9 @@ export default function Home() {
 
           </article>
 
-
           <article>
 
-            <b>
-              ✓
-            </b>
+            <b>✓</b>
 
             <h3>
               Better Value
@@ -637,12 +618,9 @@ export default function Home() {
 
           </article>
 
-
           <article>
 
-            <b>
-              ◎
-            </b>
+            <b>◎</b>
 
             <h3>
               Unique Finds
@@ -718,9 +696,7 @@ export default function Home() {
 
         <div>
 
-          <a
-            href="mailto:loopmart.admin@gmail.com"
-          >
+          <a href="mailto:loopmart.admin@gmail.com">
             loopmart.admin@gmail.com
           </a>
 
@@ -757,13 +733,11 @@ export default function Home() {
             className="footer-logo"
             href="/"
           >
-
             <Logo />
 
             <span>
               LoopMart
             </span>
-
           </a>
 
           <p>
@@ -771,7 +745,6 @@ export default function Home() {
           </p>
 
         </div>
-
 
         <nav>
 
@@ -800,12 +773,9 @@ export default function Home() {
 
         </nav>
 
-
         <div className="copyright">
-
-          © {new Date().getFullYear()}
-          {" "}LoopMart. All rights reserved.
-
+          © {new Date().getFullYear()} LoopMart.
+          All rights reserved.
         </div>
 
       </footer>
@@ -816,7 +786,7 @@ export default function Home() {
 
 
 /* =====================================================
-   HORIZONTAL ROW
+   ROW
 ===================================================== */
 
 function Row({
@@ -831,9 +801,13 @@ function Row({
         type="button"
         className="row-arrow"
         onClick={() =>
-          scrollRowElement(id, -amount)
+          document
+            .getElementById(id)
+            ?.scrollBy({
+              left: -amount,
+              behavior: "smooth",
+            })
         }
-        aria-label="Scroll left"
       >
         ←
       </button>
@@ -844,32 +818,19 @@ function Row({
         type="button"
         className="row-arrow"
         onClick={() =>
-          scrollRowElement(id, amount)
+          document
+            .getElementById(id)
+            ?.scrollBy({
+              left: amount,
+              behavior: "smooth",
+            })
         }
-        aria-label="Scroll right"
       >
         →
       </button>
 
     </div>
   );
-}
-
-
-/* =====================================================
-   ROW SCROLL HELPER
-===================================================== */
-
-function scrollRowElement(id, amount) {
-  const element =
-    document.getElementById(id);
-
-  if (!element) return;
-
-  element.scrollBy({
-    left: amount,
-    behavior: "smooth",
-  });
 }
 
 
@@ -905,37 +866,7 @@ function Heading({
 
 
 /* =====================================================
-   SEARCH ICON
-===================================================== */
-
-function Search() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-
-      <circle
-        cx="11"
-        cy="11"
-        r="7"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-
-      <path
-        d="M16 16l5 5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-
-    </svg>
-  );
-}
-
-
-/* =====================================================
-   LOOPMART LOGO
+   LOGO
 ===================================================== */
 
 function Logo() {
@@ -944,7 +875,6 @@ function Logo() {
       className="loop-logo-icon"
       viewBox="0 0 64 40"
       fill="none"
-      aria-hidden="true"
     >
 
       <path
@@ -971,6 +901,7 @@ function Logo() {
 ===================================================== */
 
 function Icon(type) {
+
   const props = {
     viewBox: "0 0 24 24",
     fill: "none",
@@ -982,153 +913,65 @@ function Icon(type) {
 
     grid: (
       <>
-        <rect
-          x="4"
-          y="4"
-          width="6"
-          height="6"
-        />
-
-        <rect
-          x="14"
-          y="4"
-          width="6"
-          height="6"
-        />
-
-        <rect
-          x="4"
-          y="14"
-          width="6"
-          height="6"
-        />
-
-        <rect
-          x="14"
-          y="14"
-          width="6"
-          height="6"
-        />
+        <rect x="4" y="4" width="6" height="6" />
+        <rect x="14" y="4" width="6" height="6" />
+        <rect x="4" y="14" width="6" height="6" />
+        <rect x="14" y="14" width="6" height="6" />
       </>
     ),
 
     shoe: (
-      <path
-        d="M4 15c4 .5 6-1 8-4l2-3 2 3c1 1 2 2 4 2v5H4z"
-      />
+      <path d="M4 15c4 .5 6-1 8-4l2-3 2 3c1 1 2 2 4 2v5H4z" />
     ),
 
     hanger: (
       <>
-        <path
-          d="M12 7c-2 0-2-4 0-4 2 0 2 2 1 3"
-        />
-
-        <path
-          d="M13 7 4 14h16z"
-        />
+        <path d="M12 7c-2 0-2-4 0-4 2 0 2 2 1 3" />
+        <path d="M13 7 4 14h16z" />
       </>
     ),
 
     watch: (
       <>
-        <rect
-          x="7"
-          y="8"
-          width="10"
-          height="8"
-          rx="3"
-        />
-
-        <path
-          d="M9 4h6l1 4"
-        />
-
-        <path
-          d="M8 16l1 4h6l1-4"
-        />
-
-        <path
-          d="M12 10v3l2 1"
-        />
+        <rect x="7" y="8" width="10" height="8" rx="3" />
+        <path d="M9 4h6l1 4" />
+        <path d="M8 16l1 4h6l1-4" />
+        <path d="M12 10v3l2 1" />
       </>
     ),
 
     bag: (
       <>
-        <path
-          d="M5 8h14l-1 12H6z"
-        />
-
-        <path
-          d="M9 8V6a3 3 0 0 1 6 0v2"
-        />
+        <path d="M5 8h14l-1 12H6z" />
+        <path d="M9 8V6a3 3 0 0 1 6 0v2" />
       </>
     ),
 
     laptop: (
       <>
-        <rect
-          x="5"
-          y="5"
-          width="14"
-          height="10"
-        />
-
-        <path
-          d="M3 18h18"
-        />
+        <rect x="5" y="5" width="14" height="10" />
+        <path d="M3 18h18" />
       </>
     ),
 
     chair: (
       <>
-        <path
-          d="M6 13V7c0-1 .9-2 2-2h8c1 0 2 1 2 2v6"
-        />
-
-        <path
-          d="M4 13h16v3H4"
-        />
-
-        <path
-          d="M6 16v4"
-        />
-
-        <path
-          d="M18 16v4"
-        />
+        <path d="M6 13V7c0-1 .9-2 2-2h8c1 0 2 1 2 2v6" />
+        <path d="M4 13h16v3H4" />
+        <path d="M6 16v4" />
+        <path d="M18 16v4" />
       </>
     ),
 
     books: (
-      <path
-        d="M5 5h13v3H5zM4 9h15v3H4zM5 13h13v3H5zM4 17h16v3H4z"
-      />
+      <path d="M5 5h13v3H5zM4 9h15v3H4zM5 13h13v3H5zM4 17h16v3H4z" />
     ),
 
     dots: (
       <>
-        <circle
-          cx="6"
-          cy="12"
-          r="1"
-          fill="currentColor"
-        />
-
-        <circle
-          cx="12"
-          cy="12"
-          r="1"
-          fill="currentColor"
-        />
-
-        <circle
-          cx="18"
-          cy="12"
-          r="1"
-          fill="currentColor"
-        />
+        <circle cx="6" cy="12" r="1" fill="currentColor" />
+        <circle cx="12" cy="12" r="1" fill="currentColor" />
+        <circle cx="18" cy="12" r="1" fill="currentColor" />
       </>
     ),
   };

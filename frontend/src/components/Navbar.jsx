@@ -19,63 +19,87 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    setMenuOpen(false);
+    closeMenu();
     navigate("/");
   };
 
-  /* ---------------------------------------------
-     GO TO PRODUCT LISTING
-  --------------------------------------------- */
+  /* =====================================================
+     SHOP
+  ===================================================== */
 
-  const goToProducts = () => {
+  const goToShop = () => {
     closeMenu();
 
-    setTimeout(() => {
-      const element =
-        document.getElementById("product-listing");
+    if (window.location.pathname !== "/") {
+      navigate("/");
 
-      if (element) {
-        element.scrollIntoView({
+      setTimeout(() => {
+        document
+          .getElementById("product-listing")
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      }, 300);
+
+      return;
+    }
+
+    setTimeout(() => {
+      document
+        .getElementById("product-listing")
+        ?.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
-      } else {
-        navigate("/");
-      }
     }, 80);
   };
 
-  /* ---------------------------------------------
-     GO TO CATEGORIES
-  --------------------------------------------- */
+  /* =====================================================
+     CATEGORIES
+  ===================================================== */
 
   const goToCategories = () => {
     closeMenu();
 
-    setTimeout(() => {
-      const element =
-        document.getElementById("categories");
+    if (window.location.pathname !== "/") {
+      navigate("/");
 
-      if (element) {
-        element.scrollIntoView({
+      setTimeout(() => {
+        document
+          .getElementById("categories")
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      }, 300);
+
+      return;
+    }
+
+    setTimeout(() => {
+      document
+        .getElementById("categories")
+        ?.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
-      } else {
-        navigate("/");
-      }
     }, 80);
   };
 
-  /* ---------------------------------------------
-     LOCK BACKGROUND WHEN MENU OPEN
-  --------------------------------------------- */
+  /* =====================================================
+     LOCK BACKGROUND WHEN DRAWER IS OPEN
+  ===================================================== */
 
   useEffect(() => {
     if (menuOpen) {
-      document.body.classList.add("loopmart-menu-open");
+      document.body.classList.add(
+        "loopmart-menu-open"
+      );
     } else {
-      document.body.classList.remove("loopmart-menu-open");
+      document.body.classList.remove(
+        "loopmart-menu-open"
+      );
     }
 
     return () => {
@@ -107,15 +131,13 @@ export default function Navbar() {
           </Link>
 
 
-          {/* =================================================
-              DESKTOP NAVIGATION
-          ================================================= */}
+          {/* DESKTOP LINKS */}
 
           <nav className="main-nav">
 
             <button
               type="button"
-              onClick={goToProducts}
+              onClick={goToShop}
             >
               Shop
             </button>
@@ -136,9 +158,7 @@ export default function Navbar() {
           </nav>
 
 
-          {/* =================================================
-              DESKTOP ACTIONS
-          ================================================= */}
+          {/* DESKTOP ACTIONS */}
 
           <div className="nav-actions">
 
@@ -172,16 +192,20 @@ export default function Navbar() {
 
             {user ? (
               <span className="account-action">
-                <span>♙</span>
-                <span>Account</span>
+                ♙
+                <span>
+                  Account
+                </span>
               </span>
             ) : (
               <Link
                 to="/login"
                 className="nav-action"
               >
-                <span>♙</span>
-                <span>Login</span>
+                ♙
+                <span>
+                  Login
+                </span>
               </Link>
             )}
 
@@ -209,20 +233,17 @@ export default function Navbar() {
           </div>
 
 
-          {/* =================================================
-              MOBILE THREE DOT
-          ================================================= */}
+          {/* MOBILE THREE DOT */}
 
           <button
             type="button"
             className="mobile-menu-button"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
-            aria-expanded={menuOpen}
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span />
+            <span />
+            <span />
           </button>
 
         </div>
@@ -235,24 +256,26 @@ export default function Navbar() {
       ================================================= */}
 
       <div
-        className={`mobile-menu-backdrop ${
-          menuOpen ? "show" : ""
-        }`}
+        className={
+          menuOpen
+            ? "mobile-menu-backdrop show"
+            : "mobile-menu-backdrop"
+        }
         onClick={closeMenu}
       />
 
 
       {/* =================================================
-          MOBILE DRAWER
+          MOBILE PANEL
       ================================================= */}
 
       <aside
-        className={`mobile-drawer ${
-          menuOpen ? "open" : ""
-        }`}
+        className={
+          menuOpen
+            ? "mobile-drawer open"
+            : "mobile-drawer"
+        }
       >
-
-        {/* DRAWER HEADER */}
 
         <div className="mobile-drawer-header">
 
@@ -271,15 +294,12 @@ export default function Navbar() {
             type="button"
             className="drawer-close"
             onClick={closeMenu}
-            aria-label="Close menu"
           >
             ×
           </button>
 
         </div>
 
-
-        {/* DRAWER CONTENT */}
 
         <div className="mobile-drawer-content">
 
@@ -288,12 +308,10 @@ export default function Navbar() {
           </div>
 
 
-          {/* SHOP */}
-
           <button
             type="button"
             className="drawer-link"
-            onClick={goToProducts}
+            onClick={goToShop}
           >
             <span className="drawer-icon">
               ◇
@@ -308,8 +326,6 @@ export default function Navbar() {
             </span>
           </button>
 
-
-          {/* CATEGORIES */}
 
           <button
             type="button"
@@ -330,14 +346,12 @@ export default function Navbar() {
           </button>
 
 
-          {/* WISHLIST */}
-
           <Link
             to="/wishlist"
             className="drawer-link"
             onClick={closeMenu}
           >
-            <span className="drawer-icon heart">
+            <span className="drawer-icon">
               ♡
             </span>
 
@@ -350,8 +364,6 @@ export default function Navbar() {
             </span>
           </Link>
 
-
-          {/* CART */}
 
           <Link
             to="/cart"
@@ -376,8 +388,6 @@ export default function Navbar() {
           </Link>
 
 
-          {/* MY ORDERS */}
-
           {user && (
             <Link
               to="/my-orders"
@@ -399,15 +409,13 @@ export default function Navbar() {
           )}
 
 
-          <div className="drawer-divider"></div>
+          <div className="drawer-divider" />
 
 
           <div className="drawer-section-title">
             ACCOUNT
           </div>
 
-
-          {/* ACCOUNT */}
 
           {user ? (
             <div className="drawer-account">
@@ -417,7 +425,6 @@ export default function Navbar() {
               </div>
 
               <div>
-
                 <strong>
                   Account
                 </strong>
@@ -427,7 +434,6 @@ export default function Navbar() {
                     user.email ||
                     "My account"}
                 </small>
-
               </div>
 
             </div>
@@ -452,8 +458,6 @@ export default function Navbar() {
           )}
 
 
-          {/* ADMIN */}
-
           {user?.isAdmin && (
             <Link
               to="/admin"
@@ -475,8 +479,6 @@ export default function Navbar() {
           )}
 
 
-          {/* LOGOUT */}
-
           {user && (
             <button
               type="button"
@@ -495,8 +497,6 @@ export default function Navbar() {
 
         </div>
 
-
-        {/* DRAWER FOOTER */}
 
         <div className="mobile-drawer-footer">
 
@@ -526,7 +526,6 @@ function Logo() {
       className="loop-logo-icon"
       viewBox="0 0 64 40"
       fill="none"
-      aria-hidden="true"
     >
 
       <path
