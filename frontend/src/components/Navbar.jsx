@@ -17,6 +17,10 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
+  /* =====================================================
+     LOGOUT
+  ===================================================== */
+
   const handleLogout = () => {
     logout();
     closeMenu();
@@ -24,7 +28,7 @@ export default function Navbar() {
   };
 
   /* =====================================================
-     SHOP
+     GO TO SHOP / PRODUCTS
   ===================================================== */
 
   const goToShop = () => {
@@ -56,7 +60,7 @@ export default function Navbar() {
   };
 
   /* =====================================================
-     CATEGORIES
+     GO TO CATEGORIES
   ===================================================== */
 
   const goToCategories = () => {
@@ -88,7 +92,7 @@ export default function Navbar() {
   };
 
   /* =====================================================
-     LOCK BACKGROUND WHEN DRAWER IS OPEN
+     LOCK PAGE WHEN MOBILE MENU IS OPEN
   ===================================================== */
 
   useEffect(() => {
@@ -119,7 +123,9 @@ export default function Navbar() {
 
         <div className="navbar-inner">
 
-          {/* LOGO */}
+          {/* =================================================
+              LOGO
+          ================================================= */}
 
           <Link
             to="/"
@@ -127,11 +133,16 @@ export default function Navbar() {
             onClick={closeMenu}
           >
             <Logo />
-            <span>LoopMart</span>
+
+            <span>
+              LoopMart
+            </span>
           </Link>
 
 
-          {/* DESKTOP LINKS */}
+          {/* =================================================
+              DESKTOP NAVIGATION
+          ================================================= */}
 
           <nav className="main-nav">
 
@@ -158,27 +169,20 @@ export default function Navbar() {
           </nav>
 
 
-          {/* DESKTOP ACTIONS */}
+          {/* =================================================
+              DESKTOP ACTIONS
+              
+              Wishlist removed here to make navbar fit.
+          ================================================= */}
 
           <div className="nav-actions">
 
-            <Link
-              to="/wishlist"
-              className="nav-action"
-            >
-              <span className="heart-icon">
-                ♡
-              </span>
-
-              <span>
-                Wishlist
-              </span>
-            </Link>
-
+            {/* CART */}
 
             <Link
               to="/cart"
               className="cart-action"
+              aria-label="Cart"
             >
               <span className="cart-icon">
                 🛒
@@ -190,25 +194,39 @@ export default function Navbar() {
             </Link>
 
 
+            {/* ACCOUNT / LOGIN */}
+
             {user ? (
               <span className="account-action">
-                ♙
+
+                <span className="account-symbol">
+                  ♙
+                </span>
+
                 <span>
                   Account
                 </span>
+
               </span>
             ) : (
               <Link
                 to="/login"
                 className="nav-action"
               >
-                ♙
+
+                <span className="account-symbol">
+                  ♙
+                </span>
+
                 <span>
                   Login
                 </span>
+
               </Link>
             )}
 
+
+            {/* ADMIN */}
 
             {user?.isAdmin && (
               <Link
@@ -219,6 +237,8 @@ export default function Navbar() {
               </Link>
             )}
 
+
+            {/* LOGOUT */}
 
             {user && (
               <button
@@ -233,17 +253,24 @@ export default function Navbar() {
           </div>
 
 
-          {/* MOBILE THREE DOT */}
+          {/* =================================================
+              MOBILE THREE DOT BUTTON
+          ================================================= */}
 
           <button
             type="button"
             className="mobile-menu-button"
-            onClick={() => setMenuOpen(true)}
+            onClick={() =>
+              setMenuOpen(true)
+            }
             aria-label="Open menu"
+            aria-expanded={menuOpen}
           >
+
             <span />
             <span />
             <span />
+
           </button>
 
         </div>
@@ -266,7 +293,7 @@ export default function Navbar() {
 
 
       {/* =================================================
-          MOBILE PANEL
+          MOBILE SIDE PANEL
       ================================================= */}
 
       <aside
@@ -277,6 +304,10 @@ export default function Navbar() {
         }
       >
 
+        {/* =================================================
+            DRAWER HEADER
+        ================================================= */}
+
         <div className="mobile-drawer-header">
 
           <Link
@@ -284,22 +315,31 @@ export default function Navbar() {
             className="drawer-logo"
             onClick={closeMenu}
           >
+
             <Logo />
+
             <span>
               LoopMart
             </span>
+
           </Link>
+
 
           <button
             type="button"
             className="drawer-close"
             onClick={closeMenu}
+            aria-label="Close menu"
           >
             ×
           </button>
 
         </div>
 
+
+        {/* =================================================
+            DRAWER CONTENT
+        ================================================= */}
 
         <div className="mobile-drawer-content">
 
@@ -308,11 +348,14 @@ export default function Navbar() {
           </div>
 
 
+          {/* SHOP */}
+
           <button
             type="button"
             className="drawer-link"
             onClick={goToShop}
           >
+
             <span className="drawer-icon">
               ◇
             </span>
@@ -324,14 +367,18 @@ export default function Navbar() {
             <span className="drawer-arrow">
               →
             </span>
+
           </button>
 
+
+          {/* CATEGORIES */}
 
           <button
             type="button"
             className="drawer-link"
             onClick={goToCategories}
           >
+
             <span className="drawer-icon">
               ▦
             </span>
@@ -343,14 +390,20 @@ export default function Navbar() {
             <span className="drawer-arrow">
               →
             </span>
+
           </button>
 
+
+          {/* WISHLIST
+              Still available inside mobile menu
+          */}
 
           <Link
             to="/wishlist"
             className="drawer-link"
             onClick={closeMenu}
           >
+
             <span className="drawer-icon">
               ♡
             </span>
@@ -362,14 +415,18 @@ export default function Navbar() {
             <span className="drawer-arrow">
               →
             </span>
+
           </Link>
 
+
+          {/* CART */}
 
           <Link
             to="/cart"
             className="drawer-link"
             onClick={closeMenu}
           >
+
             <span className="drawer-icon">
               🛒
             </span>
@@ -385,8 +442,11 @@ export default function Navbar() {
             <span className="drawer-arrow">
               →
             </span>
+
           </Link>
 
+
+          {/* MY ORDERS */}
 
           {user && (
             <Link
@@ -394,6 +454,7 @@ export default function Navbar() {
               className="drawer-link"
               onClick={closeMenu}
             >
+
               <span className="drawer-icon">
                 ◷
               </span>
@@ -405,6 +466,7 @@ export default function Navbar() {
               <span className="drawer-arrow">
                 →
               </span>
+
             </Link>
           )}
 
@@ -412,12 +474,17 @@ export default function Navbar() {
           <div className="drawer-divider" />
 
 
+          {/* =================================================
+              ACCOUNT
+          ================================================= */}
+
           <div className="drawer-section-title">
             ACCOUNT
           </div>
 
 
           {user ? (
+
             <div className="drawer-account">
 
               <div className="drawer-account-icon">
@@ -425,6 +492,7 @@ export default function Navbar() {
               </div>
 
               <div>
+
                 <strong>
                   Account
                 </strong>
@@ -434,15 +502,19 @@ export default function Navbar() {
                     user.email ||
                     "My account"}
                 </small>
+
               </div>
 
             </div>
+
           ) : (
+
             <Link
               to="/login"
               className="drawer-link"
               onClick={closeMenu}
             >
+
               <span className="drawer-icon">
                 ♙
               </span>
@@ -454,9 +526,13 @@ export default function Navbar() {
               <span className="drawer-arrow">
                 →
               </span>
+
             </Link>
+
           )}
 
+
+          {/* ADMIN */}
 
           {user?.isAdmin && (
             <Link
@@ -464,6 +540,7 @@ export default function Navbar() {
               className="drawer-link"
               onClick={closeMenu}
             >
+
               <span className="drawer-icon">
                 ◈
               </span>
@@ -475,9 +552,12 @@ export default function Navbar() {
               <span className="drawer-arrow">
                 →
               </span>
+
             </Link>
           )}
 
+
+          {/* LOGOUT */}
 
           {user && (
             <button
@@ -485,6 +565,7 @@ export default function Navbar() {
               className="drawer-logout"
               onClick={handleLogout}
             >
+
               <span>
                 ↪
               </span>
@@ -492,11 +573,16 @@ export default function Navbar() {
               <span>
                 Logout
               </span>
+
             </button>
           )}
 
         </div>
 
+
+        {/* =================================================
+            DRAWER FOOTER
+        ================================================= */}
 
         <div className="mobile-drawer-footer">
 
@@ -517,7 +603,7 @@ export default function Navbar() {
 
 
 /* =====================================================
-   LOGO
+   LOOPMART LOGO
 ===================================================== */
 
 function Logo() {
@@ -526,6 +612,7 @@ function Logo() {
       className="loop-logo-icon"
       viewBox="0 0 64 40"
       fill="none"
+      aria-hidden="true"
     >
 
       <path
