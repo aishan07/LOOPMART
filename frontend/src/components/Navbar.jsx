@@ -1,114 +1,457 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import "./Navbar.css";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { cart } = useCart();
   const navigate = useNavigate();
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const cartCount = cart?.length || 0;
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   const handleLogout = () => {
     logout();
+    setMenuOpen(false);
     navigate("/");
   };
 
+  const goToProducts = () => {
+    setMenuOpen(false);
+
+    setTimeout(() => {
+      const products = document.getElementById("product-listing");
+
+      if (products) {
+        products.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      } else {
+        navigate("/");
+      }
+    }, 50);
+  };
+
+  const goToCategories = () => {
+    setMenuOpen(false);
+
+    setTimeout(() => {
+      const categories = document.getElementById("categories");
+
+      if (categories) {
+        categories.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      } else {
+        navigate("/");
+      }
+    }, 50);
+  };
+
+  /*
+   * Prevent background page scrolling while
+   * mobile menu is open.
+   */
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.classList.remove("menu-open");
+    }
+
+    return () => {
+      document.body.classList.remove("menu-open");
+    };
+  }, [menuOpen]);
+
   return (
-    <header style={styles.nav}>
-      <div style={styles.inner}>
+    <>
+      {/* ================= DESKTOP / MOBILE NAVBAR ================= */}
 
-        {/* LOGO */}
-        <Link to="/" style={styles.brand}>
-          <Logo />
-          <span>LoopMart</span>
-        </Link>
+      <header className="loop-navbar">
 
-        {/* DESKTOP NAVIGATION */}
-        <nav style={styles.links}>
+        <div className="navbar-inner">
 
-          <Link to="/" style={styles.link}>
-            Shop
+          {/* LOGO */}
+
+          <Link
+            to="/"
+            className="loop-logo"
+            onClick={closeMenu}
+          >
+            <Logo />
+            <span>LoopMart</span>
           </Link>
 
-          <a href="/#categories" style={styles.link}>
-            Categories
-          </a>
+          {/* DESKTOP NAVIGATION */}
 
-          {user && (
-            <Link to="/my-orders" style={styles.link}>
-              My Orders
+          <nav className="main-nav">
+
+            <button
+              type="button"
+              onClick={goToProducts}
+            >
+              Shop
+            </button>
+
+            <button
+              type="button"
+              onClick={goToCategories}
+            >
+              Categories
+            </button>
+
+            {user && (
+              <Link to="/my-orders">
+                My Orders
+              </Link>
+            )}
+
+          </nav>
+
+          {/* DESKTOP ACTIONS */}
+
+          <div className="nav-actions">
+
+            <Link
+              to="/wishlist"
+              className="nav-action"
+            >
+              <span className="heart-icon">♡</span>
+              <span>Wishlist</span>
             </Link>
-          )}
 
-        </nav>
+            <Link
+              to="/cart"
+              className="cart-action"
+            >
+              <span className="cart-icon">
+                🛒
+              </span>
 
-        {/* RIGHT SIDE */}
-        <div style={styles.actions}>
+              <span className="cart-count">
+                {cartCount}
+              </span>
+            </Link>
+
+            {user ? (
+              <span className="account-action">
+                <span>♙</span>
+                <span>Account</span>
+              </span>
+            ) : (
+              <Link
+                to="/login"
+                className="nav-action"
+              >
+                <span>♙</span>
+                <span>Login</span>
+              </Link>
+            )}
+
+            {user?.isAdmin && (
+              <Link
+                to="/admin"
+                className="admin-link"
+              >
+                Admin
+              </Link>
+            )}
+
+            {user && (
+              <button
+                className="desktop-logout"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            )}
+
+          </div>
+
+          {/* MOBILE THREE DOT BUTTON */}
+
+          <button
+            className="mobile-menu-button"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(true)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+        </div>
+
+      </header>
+
+      {/* ================= MOBILE MENU ================= */}
+
+      <div
+        className={`mobile-menu-backdrop ${
+          menuOpen ? "show" : ""
+        }`}
+        onClick={closeMenu}
+      ></div>
+
+      <aside
+        className={`mobile-drawer ${
+          menuOpen ? "open" : ""
+        }`}
+      >
+
+        {/* DRAWER HEADER */}
+
+        <div className="mobile-drawer-header">
+
+          <Link
+            to="/"
+            className="drawer-logo"
+            onClick={closeMenu}
+          >
+            <Logo />
+            <span>LoopMart</span>
+          </Link>
+
+          <button
+            className="drawer-close"
+            onClick={closeMenu}
+            aria-label="Close menu"
+          >
+            ×
+          </button>
+
+        </div>
+
+        {/* DRAWER CONTENT */}
+
+        <div className="mobile-drawer-content">
+
+          <div className="drawer-section-title">
+            SHOP
+          </div>
+
+          {/* SHOP */}
+
+          <button
+            className="drawer-link"
+            onClick={goToProducts}
+          >
+            <span className="drawer-icon">
+              ◇
+            </span>
+
+            <span>Shop</span>
+
+            <span className="drawer-arrow">
+              →
+            </span>
+          </button>
+
+          {/* CATEGORIES */}
+
+          <button
+            className="drawer-link"
+            onClick={goToCategories}
+          >
+            <span className="drawer-icon">
+              ▦
+            </span>
+
+            <span>Categories</span>
+
+            <span className="drawer-arrow">
+              →
+            </span>
+          </button>
 
           {/* WISHLIST */}
-          <Link to="/wishlist" style={styles.actionLink}>
-            <span style={styles.icon}>♡</span>
+
+          <Link
+            to="/wishlist"
+            className="drawer-link"
+            onClick={closeMenu}
+          >
+            <span className="drawer-icon heart">
+              ♡
+            </span>
+
             <span>Wishlist</span>
+
+            <span className="drawer-arrow">
+              →
+            </span>
           </Link>
 
           {/* CART */}
-          <Link to="/cart" style={styles.cart}>
-            <span style={styles.cartIcon}>🛒</span>
 
-            <span style={styles.cartCount}>
-              {cart?.length || 0}
+          <Link
+            to="/cart"
+            className="drawer-link"
+            onClick={closeMenu}
+          >
+            <span className="drawer-icon">
+              🛒
+            </span>
+
+            <span>Cart</span>
+
+            <span className="drawer-badge">
+              {cartCount}
+            </span>
+
+            <span className="drawer-arrow">
+              →
             </span>
           </Link>
 
-          {/* ACCOUNT / LOGIN */}
+          {/* MY ORDERS */}
+
+          {user && (
+            <Link
+              to="/my-orders"
+              className="drawer-link"
+              onClick={closeMenu}
+            >
+              <span className="drawer-icon">
+                ◷
+              </span>
+
+              <span>My Orders</span>
+
+              <span className="drawer-arrow">
+                →
+              </span>
+            </Link>
+          )}
+
+          <div className="drawer-divider"></div>
+
+          <div className="drawer-section-title">
+            ACCOUNT
+          </div>
+
+          {/* ACCOUNT */}
+
           {user ? (
-            <span style={styles.account}>
-              ♙
-              <span>Account</span>
-            </span>
+            <div className="drawer-account">
+
+              <div className="drawer-account-icon">
+                ♙
+              </div>
+
+              <div>
+                <strong>
+                  Account
+                </strong>
+
+                <small>
+                  {user.name ||
+                    user.email ||
+                    "My account"}
+                </small>
+              </div>
+
+            </div>
           ) : (
-            <Link to="/login" style={styles.actionLink}>
-              ♙
+            <Link
+              to="/login"
+              className="drawer-link"
+              onClick={closeMenu}
+            >
+              <span className="drawer-icon">
+                ♙
+              </span>
+
               <span>Login</span>
+
+              <span className="drawer-arrow">
+                →
+              </span>
             </Link>
           )}
 
           {/* ADMIN */}
+
           {user?.isAdmin && (
-            <Link to="/admin" style={styles.link}>
-              Admin
+            <Link
+              to="/admin"
+              className="drawer-link"
+              onClick={closeMenu}
+            >
+              <span className="drawer-icon">
+                ◈
+              </span>
+
+              <span>Admin Dashboard</span>
+
+              <span className="drawer-arrow">
+                →
+              </span>
             </Link>
           )}
 
           {/* LOGOUT */}
+
           {user && (
             <button
-              style={styles.logout}
+              className="drawer-logout"
               onClick={handleLogout}
             >
-              Logout
+              <span>
+                ↪
+              </span>
+
+              <span>
+                Logout
+              </span>
             </button>
           )}
 
         </div>
 
-      </div>
-    </header>
+        {/* DRAWER FOOTER */}
+
+        <div className="mobile-drawer-footer">
+          <span>
+            LoopMart
+          </span>
+
+          <small>
+            Keep things in loop.
+          </small>
+        </div>
+
+      </aside>
+    </>
   );
 }
 
 
-/* =========================================================
+/* =====================================================
    LOOPMART LOGO
-========================================================= */
+===================================================== */
 
 function Logo() {
   return (
     <svg
-      style={styles.logoIcon}
+      className="loop-logo-icon"
       viewBox="0 0 64 40"
       fill="none"
       aria-hidden="true"
     >
+
       <path
         d="M5 20C5 11.7 11.7 5 20 5C28.3 5 35 11.7 35 20C35 28.3 41.7 35 50 35C58.3 35 63 28.3 63 20"
         stroke="currentColor"
@@ -122,209 +465,7 @@ function Logo() {
         strokeWidth="6"
         strokeLinecap="round"
       />
+
     </svg>
   );
 }
-
-
-/* =========================================================
-   STYLES
-========================================================= */
-
-const styles = {
-
-  nav: {
-    position: "sticky",
-    top: 0,
-    zIndex: 100,
-
-    width: "100%",
-
-    background: "rgba(250, 250, 248, 0.96)",
-
-    backdropFilter: "blur(12px)",
-
-    borderBottom: "1px solid #e3e7e3",
-
-    color: "#202522",
-  },
-
-  inner: {
-    width: "min(1440px, calc(100% - 56px))",
-
-    minHeight: "76px",
-
-    margin: "0 auto",
-
-    display: "flex",
-
-    alignItems: "center",
-
-    gap: "30px",
-  },
-
-  /* ---------- LOGO ---------- */
-
-  brand: {
-    display: "flex",
-
-    alignItems: "center",
-
-    gap: "9px",
-
-    color: "#244c35",
-
-    fontSize: "21px",
-
-    fontWeight: "800",
-
-    letterSpacing: "-0.04em",
-
-    textDecoration: "none",
-
-    whiteSpace: "nowrap",
-  },
-
-  logoIcon: {
-    width: "34px",
-    height: "23px",
-
-    flexShrink: 0,
-  },
-
-  /* ---------- MAIN LINKS ---------- */
-
-  links: {
-    display: "flex",
-
-    alignItems: "center",
-
-    gap: "25px",
-
-    fontSize: "12px",
-
-    fontWeight: "700",
-
-    whiteSpace: "nowrap",
-  },
-
-  link: {
-    color: "#202522",
-
-    textDecoration: "none",
-
-    transition: "color 0.2s ease",
-  },
-
-  /* ---------- RIGHT ACTIONS ---------- */
-
-  actions: {
-    display: "flex",
-
-    alignItems: "center",
-
-    gap: "18px",
-
-    marginLeft: "auto",
-
-    fontSize: "12px",
-
-    fontWeight: "700",
-
-    whiteSpace: "nowrap",
-  },
-
-  actionLink: {
-    display: "flex",
-
-    alignItems: "center",
-
-    gap: "6px",
-
-    color: "#202522",
-
-    textDecoration: "none",
-  },
-
-  account: {
-    display: "flex",
-
-    alignItems: "center",
-
-    gap: "6px",
-
-    color: "#202522",
-  },
-
-  icon: {
-    fontSize: "20px",
-    lineHeight: 1,
-  },
-
-  /* ---------- CART ---------- */
-
-  cart: {
-    position: "relative",
-
-    display: "flex",
-
-    alignItems: "center",
-
-    justifyContent: "center",
-
-    color: "#202522",
-
-    textDecoration: "none",
-
-    width: "28px",
-    height: "28px",
-  },
-
-  cartIcon: {
-    fontSize: "18px",
-  },
-
-  cartCount: {
-    position: "absolute",
-
-    top: "-5px",
-    right: "-5px",
-
-    width: "16px",
-    height: "16px",
-
-    display: "grid",
-
-    placeItems: "center",
-
-    borderRadius: "50%",
-
-    background: "#244c35",
-
-    color: "#fff",
-
-    fontSize: "8px",
-
-    fontWeight: "800",
-  },
-
-  /* ---------- LOGOUT ---------- */
-
-  logout: {
-    border: "1px solid #e3e7e3",
-
-    background: "#fff",
-
-    color: "#244c35",
-
-    padding: "7px 12px",
-
-    borderRadius: "3px",
-
-    cursor: "pointer",
-
-    fontSize: "11px",
-
-    fontWeight: "700",
-  },
-};
