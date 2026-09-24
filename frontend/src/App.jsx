@@ -18,7 +18,7 @@ export default function App() {
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
-          
+          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetail />} />
