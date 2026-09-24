@@ -23,59 +23,73 @@ export default function Navbar() {
     navigate("/");
   };
 
+  /* ---------------------------------------------
+     GO TO PRODUCT LISTING
+  --------------------------------------------- */
+
   const goToProducts = () => {
-    setMenuOpen(false);
+    closeMenu();
 
     setTimeout(() => {
-      const products = document.getElementById("product-listing");
+      const element =
+        document.getElementById("product-listing");
 
-      if (products) {
-        products.scrollIntoView({
+      if (element) {
+        element.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
       } else {
         navigate("/");
       }
-    }, 50);
+    }, 80);
   };
+
+  /* ---------------------------------------------
+     GO TO CATEGORIES
+  --------------------------------------------- */
 
   const goToCategories = () => {
-    setMenuOpen(false);
+    closeMenu();
 
     setTimeout(() => {
-      const categories = document.getElementById("categories");
+      const element =
+        document.getElementById("categories");
 
-      if (categories) {
-        categories.scrollIntoView({
+      if (element) {
+        element.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
       } else {
         navigate("/");
       }
-    }, 50);
+    }, 80);
   };
 
-  /*
-   * Prevent background page scrolling while
-   * mobile menu is open.
-   */
+  /* ---------------------------------------------
+     LOCK BACKGROUND WHEN MENU OPEN
+  --------------------------------------------- */
+
   useEffect(() => {
     if (menuOpen) {
-      document.body.classList.add("menu-open");
+      document.body.classList.add("loopmart-menu-open");
     } else {
-      document.body.classList.remove("menu-open");
+      document.body.classList.remove("loopmart-menu-open");
     }
 
     return () => {
-      document.body.classList.remove("menu-open");
+      document.body.classList.remove(
+        "loopmart-menu-open"
+      );
     };
   }, [menuOpen]);
 
   return (
     <>
-      {/* ================= DESKTOP / MOBILE NAVBAR ================= */}
+      {/* =================================================
+          NAVBAR
+      ================================================= */}
 
       <header className="loop-navbar">
 
@@ -92,7 +106,10 @@ export default function Navbar() {
             <span>LoopMart</span>
           </Link>
 
-          {/* DESKTOP NAVIGATION */}
+
+          {/* =================================================
+              DESKTOP NAVIGATION
+          ================================================= */}
 
           <nav className="main-nav">
 
@@ -118,7 +135,10 @@ export default function Navbar() {
 
           </nav>
 
-          {/* DESKTOP ACTIONS */}
+
+          {/* =================================================
+              DESKTOP ACTIONS
+          ================================================= */}
 
           <div className="nav-actions">
 
@@ -126,9 +146,15 @@ export default function Navbar() {
               to="/wishlist"
               className="nav-action"
             >
-              <span className="heart-icon">♡</span>
-              <span>Wishlist</span>
+              <span className="heart-icon">
+                ♡
+              </span>
+
+              <span>
+                Wishlist
+              </span>
             </Link>
+
 
             <Link
               to="/cart"
@@ -142,6 +168,7 @@ export default function Navbar() {
                 {cartCount}
               </span>
             </Link>
+
 
             {user ? (
               <span className="account-action">
@@ -158,6 +185,7 @@ export default function Navbar() {
               </Link>
             )}
 
+
             {user?.isAdmin && (
               <Link
                 to="/admin"
@@ -167,8 +195,10 @@ export default function Navbar() {
               </Link>
             )}
 
+
             {user && (
               <button
+                type="button"
                 className="desktop-logout"
                 onClick={handleLogout}
               >
@@ -178,14 +208,17 @@ export default function Navbar() {
 
           </div>
 
-          {/* MOBILE THREE DOT BUTTON */}
+
+          {/* =================================================
+              MOBILE THREE DOT
+          ================================================= */}
 
           <button
-            className="mobile-menu-button"
             type="button"
+            className="mobile-menu-button"
+            onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(true)}
           >
             <span></span>
             <span></span>
@@ -196,14 +229,22 @@ export default function Navbar() {
 
       </header>
 
-      {/* ================= MOBILE MENU ================= */}
+
+      {/* =================================================
+          MOBILE BACKDROP
+      ================================================= */}
 
       <div
         className={`mobile-menu-backdrop ${
           menuOpen ? "show" : ""
         }`}
         onClick={closeMenu}
-      ></div>
+      />
+
+
+      {/* =================================================
+          MOBILE DRAWER
+      ================================================= */}
 
       <aside
         className={`mobile-drawer ${
@@ -221,10 +262,13 @@ export default function Navbar() {
             onClick={closeMenu}
           >
             <Logo />
-            <span>LoopMart</span>
+            <span>
+              LoopMart
+            </span>
           </Link>
 
           <button
+            type="button"
             className="drawer-close"
             onClick={closeMenu}
             aria-label="Close menu"
@@ -234,6 +278,7 @@ export default function Navbar() {
 
         </div>
 
+
         {/* DRAWER CONTENT */}
 
         <div className="mobile-drawer-content">
@@ -242,9 +287,11 @@ export default function Navbar() {
             SHOP
           </div>
 
+
           {/* SHOP */}
 
           <button
+            type="button"
             className="drawer-link"
             onClick={goToProducts}
           >
@@ -252,16 +299,20 @@ export default function Navbar() {
               ◇
             </span>
 
-            <span>Shop</span>
+            <span>
+              Shop
+            </span>
 
             <span className="drawer-arrow">
               →
             </span>
           </button>
 
+
           {/* CATEGORIES */}
 
           <button
+            type="button"
             className="drawer-link"
             onClick={goToCategories}
           >
@@ -269,12 +320,15 @@ export default function Navbar() {
               ▦
             </span>
 
-            <span>Categories</span>
+            <span>
+              Categories
+            </span>
 
             <span className="drawer-arrow">
               →
             </span>
           </button>
+
 
           {/* WISHLIST */}
 
@@ -287,12 +341,15 @@ export default function Navbar() {
               ♡
             </span>
 
-            <span>Wishlist</span>
+            <span>
+              Wishlist
+            </span>
 
             <span className="drawer-arrow">
               →
             </span>
           </Link>
+
 
           {/* CART */}
 
@@ -305,7 +362,9 @@ export default function Navbar() {
               🛒
             </span>
 
-            <span>Cart</span>
+            <span>
+              Cart
+            </span>
 
             <span className="drawer-badge">
               {cartCount}
@@ -315,6 +374,7 @@ export default function Navbar() {
               →
             </span>
           </Link>
+
 
           {/* MY ORDERS */}
 
@@ -328,7 +388,9 @@ export default function Navbar() {
                 ◷
               </span>
 
-              <span>My Orders</span>
+              <span>
+                My Orders
+              </span>
 
               <span className="drawer-arrow">
                 →
@@ -336,11 +398,14 @@ export default function Navbar() {
             </Link>
           )}
 
+
           <div className="drawer-divider"></div>
+
 
           <div className="drawer-section-title">
             ACCOUNT
           </div>
+
 
           {/* ACCOUNT */}
 
@@ -352,6 +417,7 @@ export default function Navbar() {
               </div>
 
               <div>
+
                 <strong>
                   Account
                 </strong>
@@ -361,6 +427,7 @@ export default function Navbar() {
                     user.email ||
                     "My account"}
                 </small>
+
               </div>
 
             </div>
@@ -374,13 +441,16 @@ export default function Navbar() {
                 ♙
               </span>
 
-              <span>Login</span>
+              <span>
+                Login
+              </span>
 
               <span className="drawer-arrow">
                 →
               </span>
             </Link>
           )}
+
 
           {/* ADMIN */}
 
@@ -394,7 +464,9 @@ export default function Navbar() {
                 ◈
               </span>
 
-              <span>Admin Dashboard</span>
+              <span>
+                Admin Dashboard
+              </span>
 
               <span className="drawer-arrow">
                 →
@@ -402,10 +474,12 @@ export default function Navbar() {
             </Link>
           )}
 
+
           {/* LOGOUT */}
 
           {user && (
             <button
+              type="button"
               className="drawer-logout"
               onClick={handleLogout}
             >
@@ -421,9 +495,11 @@ export default function Navbar() {
 
         </div>
 
+
         {/* DRAWER FOOTER */}
 
         <div className="mobile-drawer-footer">
+
           <span>
             LoopMart
           </span>
@@ -431,6 +507,7 @@ export default function Navbar() {
           <small>
             Keep things in loop.
           </small>
+
         </div>
 
       </aside>
@@ -440,7 +517,7 @@ export default function Navbar() {
 
 
 /* =====================================================
-   LOOPMART LOGO
+   LOGO
 ===================================================== */
 
 function Logo() {
