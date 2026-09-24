@@ -28,38 +28,6 @@ export default function Navbar() {
   };
 
   /* =====================================================
-     GO TO SHOP / PRODUCTS
-  ===================================================== */
-
-  const goToShop = () => {
-    closeMenu();
-
-    if (window.location.pathname !== "/") {
-      navigate("/");
-
-      setTimeout(() => {
-        document
-          .getElementById("product-listing")
-          ?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-      }, 300);
-
-      return;
-    }
-
-    setTimeout(() => {
-      document
-        .getElementById("product-listing")
-        ?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-    }, 80);
-  };
-
-  /* =====================================================
      GO TO CATEGORIES
   ===================================================== */
 
@@ -92,6 +60,39 @@ export default function Navbar() {
   };
 
   /* =====================================================
+     GO TO SHOP / PRODUCTS
+     Used inside mobile menu
+  ===================================================== */
+
+  const goToShop = () => {
+    closeMenu();
+
+    if (window.location.pathname !== "/") {
+      navigate("/");
+
+      setTimeout(() => {
+        document
+          .getElementById("product-listing")
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      }, 300);
+
+      return;
+    }
+
+    setTimeout(() => {
+      document
+        .getElementById("product-listing")
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+    }, 80);
+  };
+
+  /* =====================================================
      LOCK PAGE WHEN MOBILE MENU IS OPEN
   ===================================================== */
 
@@ -116,7 +117,7 @@ export default function Navbar() {
   return (
     <>
       {/* =================================================
-          NAVBAR
+          MAIN NAVBAR
       ================================================= */}
 
       <header className="loop-navbar">
@@ -142,16 +143,12 @@ export default function Navbar() {
 
           {/* =================================================
               DESKTOP NAVIGATION
+
+              Shop removed
+              Wishlist removed
           ================================================= */}
 
           <nav className="main-nav">
-
-            <button
-              type="button"
-              onClick={goToShop}
-            >
-              Shop
-            </button>
 
             <button
               type="button"
@@ -171,8 +168,9 @@ export default function Navbar() {
 
           {/* =================================================
               DESKTOP ACTIONS
-              
-              Wishlist removed here to make navbar fit.
+
+              Wishlist removed
+              Shop removed
           ================================================= */}
 
           <div className="nav-actions">
@@ -184,6 +182,7 @@ export default function Navbar() {
               className="cart-action"
               aria-label="Cart"
             >
+
               <span className="cart-icon">
                 🛒
               </span>
@@ -191,12 +190,14 @@ export default function Navbar() {
               <span className="cart-count">
                 {cartCount}
               </span>
+
             </Link>
 
 
-            {/* ACCOUNT / LOGIN */}
+            {/* ACCOUNT */}
 
             {user ? (
+
               <span className="account-action">
 
                 <span className="account-symbol">
@@ -208,7 +209,9 @@ export default function Navbar() {
                 </span>
 
               </span>
+
             ) : (
+
               <Link
                 to="/login"
                 className="nav-action"
@@ -223,6 +226,7 @@ export default function Navbar() {
                 </span>
 
               </Link>
+
             )}
 
 
@@ -254,15 +258,13 @@ export default function Navbar() {
 
 
           {/* =================================================
-              MOBILE THREE DOT BUTTON
+              MOBILE THREE DOT
           ================================================= */}
 
           <button
             type="button"
             className="mobile-menu-button"
-            onClick={() =>
-              setMenuOpen(true)
-            }
+            onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={menuOpen}
           >
@@ -293,7 +295,7 @@ export default function Navbar() {
 
 
       {/* =================================================
-          MOBILE SIDE PANEL
+          MOBILE DRAWER
       ================================================= */}
 
       <aside
@@ -394,9 +396,7 @@ export default function Navbar() {
           </button>
 
 
-          {/* WISHLIST
-              Still available inside mobile menu
-          */}
+          {/* WISHLIST */}
 
           <Link
             to="/wishlist"
@@ -603,7 +603,7 @@ export default function Navbar() {
 
 
 /* =====================================================
-   LOOPMART LOGO
+   LOGO
 ===================================================== */
 
 function Logo() {
