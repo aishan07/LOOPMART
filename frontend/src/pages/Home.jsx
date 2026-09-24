@@ -4,80 +4,90 @@ import ProductCard from "../components/ProductCard";
 import "./Home.css";
 
 const categories = [
-  { name: "All", value: "", icon: "grid" },
-  { name: "Shoes", value: "Shoes", icon: "shoe" },
-  { name: "Clothes", value: "Clothing", icon: "hanger" },
-  { name: "Watches", value: "Watches", icon: "watch" },
-  { name: "Accessories", value: "Accessories", icon: "bag" },
-  { name: "Electronics", value: "Electronics", icon: "laptop" },
-  { name: "Furniture", value: "Furniture", icon: "chair" },
-  { name: "Books", value: "Books", icon: "books" },
-  { name: "Other", value: "Other", icon: "dots" },
-];
-
-const heroSlides = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1800&q=85",
-    eyebrow: "PRE-LOVED • BETTER VALUE",
-    title: "Great Things",
-    accent: "Live Again",
-    text: "Discover quality second-hand pieces at prices that make sense.",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1800&q=85",
-    eyebrow: "WORK • STYLE • REUSE",
-    title: "Find Your",
-    accent: "Next Favourite",
-    text: "Unique finds, everyday essentials and things worth keeping.",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85",
-    eyebrow: "SMART SHOPPING",
-    title: "Good Finds",
-    accent: "Go Further",
-    text: "Shop pre-loved products and give great things another life.",
-  },
+  ["All", "", "grid"],
+  ["Shoes", "Shoes", "shoe"],
+  ["Clothes", "Clothing", "hanger"],
+  ["Watches", "Watches", "watch"],
+  ["Accessories", "Accessories", "bag"],
+  ["Electronics", "Electronics", "laptop"],
+  ["Furniture", "Furniture", "chair"],
+  ["Books", "Books", "books"],
+  ["Other", "Other", "dots"],
 ];
 
 const collections = [
-  {
-    title: "Furniture",
-    text: "Pieces with character.",
-    image:
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=80",
-    category: "Furniture",
-  },
-  {
-    title: "Fashion",
-    text: "Style that keeps moving.",
-    image:
-      "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=900&q=80",
-    category: "Clothing",
-  },
-  {
-    title: "Electronics",
-    text: "Useful tech, better value.",
-    image:
-      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80",
-    category: "Electronics",
-  },
-  {
-    title: "Watches",
-    text: "Timeless pieces.",
-    image:
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80",
-    category: "Watches",
-  },
-  {
-    title: "Books",
-    text: "Stories worth passing on.",
-    image:
-      "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80",
-    category: "Books",
-  },
+  [
+    "Shoes",
+    "Find your next pair.",
+    "Shoes",
+    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85",
+  ],
+  [
+    "Clothes",
+    "Style that keeps moving.",
+    "Clothing",
+    "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1000&q=85",
+  ],
+  [
+    "Watches",
+    "Timeless pieces.",
+    "Watches",
+    "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=85",
+  ],
+  [
+    "Accessories",
+    "The details matter.",
+    "Accessories",
+    "https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?auto=format&fit=crop&w=1000&q=85",
+  ],
+  [
+    "Electronics",
+    "Useful tech, better value.",
+    "Electronics",
+    "https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=1000&q=85",
+  ],
+  [
+    "Furniture",
+    "Pieces with character.",
+    "Furniture",
+    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1000&q=85",
+  ],
+  [
+    "Books",
+    "Stories worth passing on.",
+    "Books",
+    "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=1000&q=85",
+  ],
+  [
+    "Other",
+    "Something unexpected.",
+    "Other",
+    "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=1000&q=85",
+  ],
+];
+
+const slides = [
+  [
+    "PRE-LOVED • BETTER VALUE",
+    "Great Things",
+    "Live Again",
+    "Discover quality second-hand pieces at prices that make sense.",
+    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1800&q=85",
+  ],
+  [
+    "WORK • STYLE • REUSE",
+    "Find Your",
+    "Next Favourite",
+    "Unique finds, everyday essentials and things worth keeping.",
+    "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1800&q=85",
+  ],
+  [
+    "SMART SHOPPING",
+    "Good Finds",
+    "Go Further",
+    "Shop pre-loved products and give great things another life.",
+    "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85",
+  ],
 ];
 
 export default function Home() {
@@ -85,25 +95,23 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(true);
-  const [heroIndex, setHeroIndex] = useState(0);
+  const [slide, setSlide] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const fetchProducts = async (
-    currentSearch = search,
-    currentCategory = category
-  ) => {
+  const fetchProducts = async (s = search, c = category) => {
     setLoading(true);
 
     try {
       const { data } = await api.get("/products", {
         params: {
-          search: currentSearch,
-          category: currentCategory,
+          search: s,
+          category: c,
         },
       });
 
       setProducts(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Error fetching products:", err);
+    } catch (error) {
+      console.error("Error fetching products:", error);
       setProducts([]);
     } finally {
       setLoading(false);
@@ -112,69 +120,93 @@ export default function Home() {
 
   useEffect(() => {
     fetchProducts();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setHeroIndex((current) => (current + 1) % heroSlides.length);
+      setSlide((current) => (current + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
-  const handleSearch = (e) => {
+  const searchSubmit = (e) => {
     e.preventDefault();
     fetchProducts(search, category);
   };
 
-  const handleCategory = (value) => {
+  /*
+    This is the important new function.
+
+    Clicking a category:
+    1. Changes the product filter.
+    2. Fetches matching products.
+    3. Automatically scrolls to that category's collection.
+  */
+  const chooseCategory = (value) => {
     setCategory(value);
     fetchProducts(search, value);
+
+    setTimeout(() => {
+      if (!value) {
+        document.getElementById("collections")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+        return;
+      }
+
+      const collectionId = `collection-${value
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/&/g, "and")}`;
+
+      const collection = document.getElementById(collectionId);
+
+      if (collection) {
+        collection.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      } else {
+        document.getElementById("collections")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 120);
   };
 
-  const nextHero = () => {
-    setHeroIndex((current) => (current + 1) % heroSlides.length);
+  const scrollRow = (id, amount) => {
+    document.getElementById(id)?.scrollBy({
+      left: amount,
+      behavior: "smooth",
+    });
   };
 
-  const previousHero = () => {
-    setHeroIndex(
-      (current) => (current - 1 + heroSlides.length) % heroSlides.length
-    );
+  const mobileGoTo = (id) => {
+    setMobileMenuOpen(false);
+
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 150);
   };
 
-  const currentHero = heroSlides[heroIndex];
+  const s = slides[slide];
 
   return (
     <div className="loopmart-home">
 
-      {/* ================= HEADER ================= */}
+      {/* ================= NAVBAR ================= */}
 
       <header className="loop-navbar">
         <div className="navbar-inner">
 
           <a href="/" className="loop-logo">
-            <svg
-              className="loop-logo-icon"
-              viewBox="0 0 64 40"
-              fill="none"
-            >
-              <path
-                d="M5 20C5 11.7 11.7 5 20 5C28.3 5 35 11.7 35 20C35 28.3 41.7 35 50 35C58.3 35 63 28.3 63 20"
-                stroke="currentColor"
-                strokeWidth="6"
-                strokeLinecap="round"
-              />
-
-              <path
-                d="M59 20C59 28.3 52.3 35 44 35C35.7 35 29 28.3 29 20C29 11.7 22.3 5 14 5C5.7 5 1 11.7 1 20"
-                stroke="currentColor"
-                strokeWidth="6"
-                strokeLinecap="round"
-              />
-            </svg>
-
+            <Logo />
             <span>LoopMart</span>
           </a>
 
@@ -184,8 +216,8 @@ export default function Home() {
             <a href="/orders">My Orders</a>
           </nav>
 
-          <form className="nav-search" onSubmit={handleSearch}>
-            <SearchIcon />
+          <form className="nav-search" onSubmit={searchSubmit}>
+            <Search />
 
             <input
               type="text"
@@ -197,33 +229,41 @@ export default function Home() {
 
           <div className="nav-actions">
 
-            <a href="/wishlist">
+            <a href="/wishlist" className="nav-action">
               <HeartIcon />
               <span>Wishlist</span>
             </a>
 
-            <a href="/cart" className="cart">
+            <a href="/cart" className="cart-button">
               <CartIcon />
               <b>0</b>
             </a>
 
-            <a href="/login">
+            <a href="/login" className="nav-action">
               <UserIcon />
               <span>Account</span>
             </a>
 
           </div>
 
-          <button className="mobile-menu" type="button">
-            <i />
-            <i />
-            <i />
+          {/* MOBILE MENU BUTTON */}
+
+          <button
+            className="mobile-menu-button"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
 
         </div>
 
-        <form className="mobile-search" onSubmit={handleSearch}>
-          <SearchIcon />
+        {/* MOBILE SEARCH */}
+
+        <form className="mobile-search" onSubmit={searchSubmit}>
+          <Search />
 
           <input
             type="text"
@@ -234,216 +274,243 @@ export default function Home() {
         </form>
       </header>
 
+
       {/* ================= HERO ================= */}
 
-      <section className="hero">
+      <section className="hero" id="hero">
 
         <div className="hero-copy">
 
-          <small>{currentHero.eyebrow}</small>
+          <small>{s[0]}</small>
 
           <h1>
-            {currentHero.title}
+            {s[1]}
             <br />
-            <em>{currentHero.accent}</em>
+            <em>{s[2]}</em>
           </h1>
 
-          <p>{currentHero.text}</p>
+          <p>{s[3]}</p>
 
-          <div>
-            <button
-              onClick={() => handleCategory("")}
-              type="button"
-            >
+          <div className="hero-buttons">
+
+            <button onClick={() => chooseCategory("")}>
               SHOP NOW →
             </button>
 
             <a href="#categories">
               Explore categories
             </a>
+
           </div>
 
         </div>
 
+
         <div className="hero-image">
 
           <img
-            src={currentHero.image}
-            alt={currentHero.title}
+            src={s[4]}
+            alt="LoopMart collection"
           />
 
           <button
-            type="button"
-            onClick={previousHero}
-            aria-label="Previous slide"
+            className="hero-prev"
+            onClick={() =>
+              setSlide(
+                (slide - 1 + slides.length) %
+                  slides.length
+              )
+            }
           >
             ←
           </button>
 
           <button
-            type="button"
-            onClick={nextHero}
-            aria-label="Next slide"
+            className="hero-next"
+            onClick={() =>
+              setSlide(
+                (slide + 1) % slides.length
+              )
+            }
           >
             →
           </button>
 
           <label>
-            {String(heroIndex + 1).padStart(2, "0")} /{" "}
-            {String(heroSlides.length).padStart(2, "0")}
+            {String(slide + 1).padStart(2, "0")} /{" "}
+            {String(slides.length).padStart(2, "0")}
           </label>
 
         </div>
 
       </section>
 
+
       {/* ================= CATEGORIES ================= */}
 
-      <section className="section" id="categories">
+      <section
+        className="section categories"
+        id="categories"
+      >
 
-        <div className="heading">
-          <small>DISCOVER</small>
+        <Heading
+          eyebrow="DISCOVER"
+          title="Shop by Category"
+          text="Find something that fits your style."
+        />
 
-          <h2>Shop by Category</h2>
+        <Row
+          id="category-row"
+          amount={320}
+        >
 
-          <p>Find something that fits your style.</p>
-        </div>
+          <div className="category-row">
 
-        <div className="row-shell">
+            {categories.map(
+              ([name, value, icon]) => (
 
-          <button
-            className="row-arrow"
-            onClick={() => scrollRow("category-row", -350)}
-          >
-            ←
-          </button>
+                <button
+                  key={name}
+                  className={
+                    category === value
+                      ? "selected"
+                      : ""
+                  }
+                  onClick={() =>
+                    chooseCategory(value)
+                  }
+                >
 
-          <div className="category-row" id="category-row">
+                  <span>
+                    {Icon(icon)}
+                  </span>
 
-            {categories.map((item) => (
+                  {name}
 
-              <button
-                key={item.name}
-                className={
-                  category === item.value ? "selected" : ""
-                }
-                onClick={() => handleCategory(item.value)}
-              >
+                </button>
 
-                <span>
-                  {renderCategoryIcon(item.icon)}
-                </span>
-
-                {item.name}
-
-              </button>
-
-            ))}
+              )
+            )}
 
           </div>
 
-          <button
-            className="row-arrow"
-            onClick={() => scrollRow("category-row", 350)}
-          >
-            →
-          </button>
-
-        </div>
+        </Row>
 
       </section>
+
 
       {/* ================= COLLECTIONS ================= */}
 
-      <section className="section">
+      <section
+        className="section collections-section"
+        id="collections"
+      >
 
-        <div className="heading">
+        <Heading
+          eyebrow="CURATED FOR YOU"
+          title="Explore Collections"
+          text="Choose a category and jump directly to what you want."
+        />
 
-          <small>CURATED FOR YOU</small>
+        <Row
+          id="collection-row"
+          amount={420}
+        >
 
-          <h2>Explore Collections</h2>
+          <div className="collection-row">
 
-          <p>A few good places to start.</p>
+            {collections.map(
+              ([title, text, value, img]) => {
 
-        </div>
+                const collectionId =
+                  `collection-${value
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/&/g, "and")}`;
 
-        <div className="row-shell">
-
-          <button
-            className="row-arrow"
-            onClick={() => scrollRow("collection-row", -430)}
-          >
-            ←
-          </button>
-
-          <div className="collection-row" id="collection-row">
-
-            {collections.map((item) => (
-
-              <article key={item.title}>
-
-                <img
-                  src={item.image}
-                  alt={item.title}
-                />
-
-                <div>
-
-                  <div>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                  </div>
-
-                  <button
-                    onClick={() => handleCategory(item.category)}
+                return (
+                  <article
+                    key={title}
+                    id={collectionId}
+                    className="collection-card"
                   >
-                    Explore →
-                  </button>
 
-                </div>
+                    <img
+                      src={img}
+                      alt={title}
+                    />
 
-              </article>
+                    <div className="collection-info">
 
-            ))}
+                      <div>
+                        <h3>{title}</h3>
+                        <p>{text}</p>
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          setCategory(value);
+                          fetchProducts(
+                            search,
+                            value
+                          );
+
+                          setTimeout(() => {
+                            document
+                              .getElementById(
+                                "products"
+                              )
+                              ?.scrollIntoView({
+                                behavior:
+                                  "smooth",
+                                block: "start",
+                              });
+                          }, 150);
+                        }}
+                      >
+                        Explore →
+                      </button>
+
+                    </div>
+
+                  </article>
+                );
+              }
+            )}
 
           </div>
 
-          <button
-            className="row-arrow"
-            onClick={() => scrollRow("collection-row", 430)}
-          >
-            →
-          </button>
-
-        </div>
+        </Row>
 
       </section>
 
+
       {/* ================= PRODUCTS ================= */}
 
-      <section className="section products">
+      <section
+        className="section products"
+        id="products"
+      >
 
         <div className="heading-line">
 
-          <div className="heading">
+          <Heading
+            eyebrow="FRESH FINDS"
+            title={category || "Just In"}
+            text="Quality products, ready for their next chapter."
+          />
 
-            <small>FRESH FINDS</small>
-
-            <h2>
-              {category || "Just In"}
-            </h2>
-
-            <p>
-              Quality products ready for their next chapter.
-            </p>
-
-          </div>
-
-          <button onClick={() => handleCategory("")}>
+          <button
+            onClick={() => {
+              setSearch("");
+              chooseCategory("");
+            }}
+          >
             View All →
           </button>
 
         </div>
+
 
         {loading ? (
 
@@ -475,16 +542,12 @@ export default function Home() {
 
         ) : (
 
-          <div className="row-shell">
+          <Row
+            id="product-row"
+            amount={520}
+          >
 
-            <button
-              className="row-arrow"
-              onClick={() => scrollRow("product-row", -500)}
-            >
-              ←
-            </button>
-
-            <div className="product-row" id="product-row">
+            <div className="product-row">
 
               {products.map((product, index) => (
 
@@ -492,28 +555,25 @@ export default function Home() {
                   className="product-slide"
                   key={product._id}
                   style={{
-                    animationDelay: `${index * 60}ms`,
+                    animationDelay:
+                      `${index * 60}ms`,
                   }}
                 >
-                  <ProductCard product={product} />
+                  <ProductCard
+                    product={product}
+                  />
                 </div>
 
               ))}
 
             </div>
 
-            <button
-              className="row-arrow"
-              onClick={() => scrollRow("product-row", 500)}
-            >
-              →
-            </button>
-
-          </div>
+          </Row>
 
         )}
 
       </section>
+
 
       {/* ================= SECOND LIFE ================= */}
 
@@ -521,12 +581,14 @@ export default function Home() {
 
         <img
           src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1800&q=85"
-          alt="Beautiful interior"
+          alt="Styled interior"
         />
 
         <div>
 
-          <small>THE LOOPMART IDEA</small>
+          <small>
+            THE LOOPMART IDEA
+          </small>
 
           <h2>
             Give good things
@@ -535,9 +597,9 @@ export default function Home() {
           </h2>
 
           <p>
-            Better value for you. Less waste for the world.
-            Every purchase keeps useful things in circulation
-            a little longer.
+            Better value for you. Less waste for
+            the world. Every purchase keeps useful
+            things in circulation a little longer.
           </p>
 
           <a href="#categories">
@@ -548,14 +610,15 @@ export default function Home() {
 
       </section>
 
+
       {/* ================= WHY LOOPMART ================= */}
 
       <section className="section why">
 
-        <div className="heading">
-          <small>THE LOOPMART DIFFERENCE</small>
-          <h2>Why shop pre-loved?</h2>
-        </div>
+        <Heading
+          eyebrow="THE LOOPMART DIFFERENCE"
+          title="Why shop pre-loved?"
+        />
 
         <div className="why-grid">
 
@@ -563,7 +626,8 @@ export default function Home() {
             <b>♻</b>
             <h3>Less Waste</h3>
             <p>
-              Keep useful products in circulation for longer.
+              Keep useful products in
+              circulation for longer.
             </p>
           </article>
 
@@ -571,7 +635,8 @@ export default function Home() {
             <b>✓</b>
             <h3>Better Value</h3>
             <p>
-              Find quality pieces without paying full retail.
+              Find quality pieces without
+              paying full retail price.
             </p>
           </article>
 
@@ -579,7 +644,8 @@ export default function Home() {
             <b>◎</b>
             <h3>Unique Finds</h3>
             <p>
-              Discover products that are not always easy to find.
+              Discover products that are
+              not always easy to find new.
             </p>
           </article>
 
@@ -587,13 +653,19 @@ export default function Home() {
 
       </section>
 
+
       {/* ================= ABOUT ================= */}
 
-      <section className="about">
+      <section
+        className="about"
+        id="about"
+      >
 
         <div>
 
-          <small>ABOUT LOOPMART</small>
+          <small>
+            ABOUT LOOPMART
+          </small>
 
           <h2>
             Second-hand,
@@ -606,9 +678,12 @@ export default function Home() {
         <div>
 
           <p>
-            LoopMart is a marketplace for people who want
-            great products, sensible prices and a more
-            circular way to shop.
+            LoopMart is a marketplace for people
+            who want great products, sensible
+            prices and a more circular way to shop.
+            We make it easier to discover useful
+            second-hand products and give them
+            another life.
           </p>
 
           <a href="#contact">
@@ -619,18 +694,22 @@ export default function Home() {
 
       </section>
 
+
       {/* ================= CONTACT ================= */}
 
-      <section className="contact" id="contact">
+      <section
+        className="contact"
+        id="contact"
+      >
 
         <div>
 
-          <small>NEED HELP?</small>
+          <small>
+            NEED HELP?
+          </small>
 
           <h2>
-            We're here
-            <br />
-            for you.
+            We're here for you.
           </h2>
 
         </div>
@@ -642,6 +721,7 @@ export default function Home() {
           </a>
 
           <p>
+
             <a href="tel:+919769351949">
               +91 97693 51949
             </a>
@@ -651,11 +731,13 @@ export default function Home() {
             <a href="tel:+919076116989">
               +91 90761 16989
             </a>
+
           </p>
 
         </div>
 
       </section>
+
 
       {/* ================= FOOTER ================= */}
 
@@ -663,33 +745,17 @@ export default function Home() {
 
         <div>
 
-          <a href="/" className="footer-logo">
-
-            <svg
-              className="loop-logo-icon"
-              viewBox="0 0 64 40"
-              fill="none"
-            >
-              <path
-                d="M5 20C5 11.7 11.7 5 20 5C28.3 5 35 11.7 35 20C35 28.3 41.7 35 50 35C58.3 35 63 28.3 63 20"
-                stroke="currentColor"
-                strokeWidth="6"
-                strokeLinecap="round"
-              />
-
-              <path
-                d="M59 20C59 28.3 52.3 35 44 35C35.7 35 29 28.3 29 20C29 11.7 22.3 5 14 5C5.7 5 1 11.7 1 20"
-                stroke="currentColor"
-                strokeWidth="6"
-                strokeLinecap="round"
-              />
-            </svg>
-
+          <a
+            className="footer-logo"
+            href="/"
+          >
+            <Logo />
             <span>LoopMart</span>
-
           </a>
 
-          <p>Keep things in loop.</p>
+          <p>
+            Keep things in the loop.
+          </p>
 
         </div>
 
@@ -703,28 +769,247 @@ export default function Home() {
 
         </nav>
 
+        <div className="footer-contact">
+
+          <strong>Contact Us</strong>
+
+          <a href="mailto:loopmart.admin@gmail.com">
+            loopmart.admin@gmail.com
+          </a>
+
+          <a href="tel:+919769351949">
+            +91 97693 51949
+          </a>
+
+          <a href="tel:+919076116989">
+            +91 90761 16989
+          </a>
+
+        </div>
+
         <div className="copyright">
-          © {new Date().getFullYear()} LoopMart. All rights reserved.
+          © {new Date().getFullYear()} LoopMart.
+          All rights reserved.
         </div>
 
       </footer>
+
+
+      {/* ================= MOBILE SIDE MENU ================= */}
+
+      {mobileMenuOpen && (
+        <>
+
+          <div
+            className="mobile-menu-backdrop"
+            onClick={() =>
+              setMobileMenuOpen(false)
+            }
+          />
+
+          <aside className="mobile-drawer">
+
+            <div className="mobile-drawer-header">
+
+              <div>
+                <strong>LoopMart</strong>
+                <small>
+                  SECOND-LIFE MARKET
+                </small>
+              </div>
+
+              <button
+                onClick={() =>
+                  setMobileMenuOpen(false)
+                }
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            <div className="mobile-drawer-content">
+
+              <button
+                onClick={() =>
+                  mobileGoTo("hero")
+                }
+              >
+                Shop
+              </button>
+
+              <button
+                onClick={() =>
+                  mobileGoTo("categories")
+                }
+              >
+                Categories
+              </button>
+
+
+              <div className="drawer-label">
+                SHOP BY CATEGORY
+              </div>
+
+
+              {categories
+                .filter(
+                  ([, value]) => value
+                )
+                .map(
+                  ([name, value, icon]) => (
+
+                    <button
+                      key={name}
+                      className="drawer-category"
+                      onClick={() => {
+                        setMobileMenuOpen(
+                          false
+                        );
+                        chooseCategory(
+                          value
+                        );
+                      }}
+                    >
+
+                      <span>
+                        {Icon(icon)}
+                      </span>
+
+                      {name}
+
+                    </button>
+
+                  )
+                )}
+
+
+              <div className="drawer-divider" />
+
+
+              <button
+                onClick={() =>
+                  mobileGoTo("about")
+                }
+              >
+                About Us
+              </button>
+
+              <button
+                onClick={() =>
+                  mobileGoTo("contact")
+                }
+              >
+                Contact Us
+              </button>
+
+              <a href="/orders">
+                My Orders
+              </a>
+
+              <a href="/wishlist">
+                Wishlist
+              </a>
+
+              <a href="/cart">
+                Cart
+              </a>
+
+              <a href="/admin">
+                Admin
+              </a>
+
+              <a href="/login">
+                Account
+              </a>
+
+              <button className="drawer-logout">
+                Logout
+              </button>
+
+            </div>
+
+          </aside>
+
+        </>
+      )}
 
     </div>
   );
 }
 
-/* ================= HELPERS ================= */
 
-function scrollRow(id, amount) {
-  document.getElementById(id)?.scrollBy({
-    left: amount,
-    behavior: "smooth",
-  });
+/* ================= ROW ================= */
+
+function Row({ id, amount, children }) {
+  return (
+    <div className="row-shell">
+
+      <button
+        className="row-arrow"
+        onClick={() =>
+          document
+            .getElementById(id)
+            ?.scrollBy({
+              left: -amount,
+              behavior: "smooth",
+            })
+        }
+      >
+        ←
+      </button>
+
+      {children}
+
+      <button
+        className="row-arrow"
+        onClick={() =>
+          document
+            .getElementById(id)
+            ?.scrollBy({
+              left: amount,
+              behavior: "smooth",
+            })
+        }
+      >
+        →
+      </button>
+
+    </div>
+  );
 }
 
-function SearchIcon() {
+
+/* ================= HEADING ================= */
+
+function Heading({
+  eyebrow,
+  title,
+  text,
+}) {
   return (
-    <svg viewBox="0 0 24 24" fill="none">
+    <div className="heading">
+
+      <small>{eyebrow}</small>
+
+      <h2>{title}</h2>
+
+      {text && <p>{text}</p>}
+
+    </div>
+  );
+}
+
+
+/* ================= SEARCH ICON ================= */
+
+function Search() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <circle
         cx="11"
         cy="11"
@@ -732,6 +1017,7 @@ function SearchIcon() {
         stroke="currentColor"
         strokeWidth="1.8"
       />
+
       <path
         d="M16 16L21 21"
         stroke="currentColor"
@@ -741,21 +1027,34 @@ function SearchIcon() {
   );
 }
 
+
+/* ================= HEART ================= */
+
 function HeartIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M20.8 8.8C20.8 13.7 12 19 12 19S3.2 13.7 3.2 8.8C3.2 5.9 5.4 4 8 4C9.7 4 11.2 4.8 12 6.1C12.8 4.8 14.3 4 16 4C18.6 4 20.8 5.9 20.8 8.8Z"
         stroke="currentColor"
         strokeWidth="1.7"
+        strokeLinejoin="round"
       />
     </svg>
   );
 }
 
+
+/* ================= CART ================= */
+
 function CartIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         d="M3 4H5L7.2 15.2C7.4 16.2 8.3 17 9.3 17H18.2C19.2 17 20 16.3 20.3 15.3L22 8H6"
         stroke="currentColor"
@@ -763,15 +1062,33 @@ function CartIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="9.5" cy="20" r="1.4" fill="currentColor" />
-      <circle cx="18" cy="20" r="1.4" fill="currentColor" />
+
+      <circle
+        cx="9.5"
+        cy="20"
+        r="1.4"
+        fill="currentColor"
+      />
+
+      <circle
+        cx="18"
+        cy="20"
+        r="1.4"
+        fill="currentColor"
+      />
     </svg>
   );
 }
 
+
+/* ================= USER ================= */
+
 function UserIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <circle
         cx="12"
         cy="7"
@@ -790,7 +1107,38 @@ function UserIcon() {
   );
 }
 
-function renderCategoryIcon(type) {
+
+/* ================= LOGO ================= */
+
+function Logo() {
+  return (
+    <svg
+      className="loop-logo-icon"
+      viewBox="0 0 64 40"
+      fill="none"
+    >
+      <path
+        d="M5 20C5 11.7 11.7 5 20 5C28.3 5 35 11.7 35 20C35 28.3 41.7 35 50 35C58.3 35 63 28.3 63 20"
+        stroke="currentColor"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+
+      <path
+        d="M59 20C59 28.3 52.3 35 44 35C35.7 35 29 28.3 29 20C29 11.7 22.3 5 14 5C5.7 5 1 11.7 1 20"
+        stroke="currentColor"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+
+/* ================= CATEGORY ICONS ================= */
+
+function Icon(type) {
+
   const common = {
     viewBox: "0 0 24 24",
     fill: "none",
@@ -813,34 +1161,33 @@ function renderCategoryIcon(type) {
     case "shoe":
       return (
         <svg {...common}>
-          <path d="M4 15c3.5.4 6.2-.7 8.2-3.4l2-3.1 2.1 2.2c1.1 1.1 2.3 1.8 3.7 2.2v4.6H4V15Z" />
-          <path d="M12 11.5c-1.5.5-2.7.3-4-.3" />
+          <path d="M4 15C8 15.5 10 13.5 12 10L14 7L16 10C17 11.5 18 12 20 12V19H4Z" />
         </svg>
       );
 
     case "hanger":
       return (
         <svg {...common}>
-          <path d="M12 5c0-1.1.9-2 2-2s2 .9 2 2c0 1.2-1 2-2 2" />
-          <path d="M14 7 4 14h16L14 7Z" />
+          <path d="M12 7C10 7 10 3 12 3C14 3 14 5 13 6" />
+          <path d="M13 7L4 14H20Z" />
         </svg>
       );
 
     case "watch":
       return (
         <svg {...common}>
-          <path d="M9 4h6l1 4H8l1-4Z" />
           <rect x="7" y="8" width="10" height="8" rx="3" />
-          <path d="M8 16h8l-1 4H9l-1-4Z" />
-          <path d="M12 10v3l2 1" />
+          <path d="M9 4H15L16 8" />
+          <path d="M8 16L9 20H15L16 16" />
+          <path d="M12 10V13L14 14" />
         </svg>
       );
 
     case "bag":
       return (
         <svg {...common}>
-          <path d="M5 8h14l-1 12H6L5 8Z" />
-          <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+          <path d="M5 8H19L18 20H6Z" />
+          <path d="M9 8V6C9 4.3 10.3 3 12 3C13.7 3 15 4.3 15 6V8" />
         </svg>
       );
 
@@ -848,47 +1195,40 @@ function renderCategoryIcon(type) {
       return (
         <svg {...common}>
           <rect x="5" y="5" width="14" height="10" rx="1" />
-          <path d="M3 18h18" />
+          <path d="M3 18H21" />
         </svg>
       );
 
     case "chair":
       return (
         <svg {...common}>
-          <path d="M6 13V7c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v6" />
-          <path d="M4 13h16v3H4zM6 16v4M18 16v4" />
+          <path d="M6 13V7C6 5.9 6.9 5 8 5H16C17.1 5 18 5.9 18 7V13" />
+          <path d="M4 13H20V16H4Z" />
+          <path d="M6 16V20" />
+          <path d="M18 16V20" />
         </svg>
       );
 
     case "books":
       return (
         <svg {...common}>
-          <path d="M5 5h13v3H5zM4 9h15v3H4zM5 13h13v3H5zM4 17h16v3H4z" />
+          <path d="M5 5H18V8H5Z" />
+          <path d="M4 9H19V12H4Z" />
+          <path d="M5 13H18V16H5Z" />
+          <path d="M4 17H20V20H4Z" />
+        </svg>
+      );
+
+    case "dots":
+      return (
+        <svg {...common}>
+          <circle cx="6" cy="12" r="1.5" fill="currentColor" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+          <circle cx="18" cy="12" r="1.5" fill="currentColor" />
         </svg>
       );
 
     default:
-      return (
-        <svg {...common}>
-          <circle
-            cx="6"
-            cy="12"
-            r="1"
-            fill="currentColor"
-          />
-          <circle
-            cx="12"
-            cy="12"
-            r="1"
-            fill="currentColor"
-          />
-          <circle
-            cx="18"
-            cy="12"
-            r="1"
-            fill="currentColor"
-          />
-        </svg>
-      );
+      return null;
   }
 }
