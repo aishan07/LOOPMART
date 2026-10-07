@@ -392,14 +392,14 @@ export default function Home() {
             {collections.map(
               ([title, text, value, image]) => (
 
-                <article key={title}>
+                <article key={title} className="collection-card">
 
                   <img
                     src={image}
                     alt={title}
                   />
 
-                  <div>
+                  <div className="collection-info">
 
                     <div>
 
@@ -689,7 +689,7 @@ export default function Home() {
           </small>
 
           <h2>
-            We’re here for you.
+            We're here for you.
           </h2>
 
         </div>
